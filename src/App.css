@@ -104,11 +104,24 @@
 /* content nav */
 .content_nav {
   display: flex;
+  align-items: center;
   font-size: 1.75rem;
   padding: 20px 0;
 }
 
 .content_nav .icon_back {
+  font-size: 0;
+}
+
+.content_nav .icon_back:before {
+  content: '';
+  display: inline-block;
+  clear: both;
+  width: 30px;
+  height: 30px;
+  background-image: url('./assets/img/icon_back_arrow.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .content_nav .title {
   flex: 1;
