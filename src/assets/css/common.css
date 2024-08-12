@@ -1,0 +1,138 @@
+@font-face {
+  font-family: 'Ownglyph_kimkonghae';
+  src: url('../fonts/Ownglyph_kimkonghae.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* reset */
+body {
+  font-size: 20px;
+  color: #333;
+  line-height: 1.5;
+  letter-spacing: 0;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: none;
+  font-family: 'Ownglyph_kimkonghae', sans-serif;
+}
+ul,
+li,
+dl,
+dt,
+dd {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: #333;
+  text-decoration: none;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: inherit;
+}
+table th {
+  font-weight: normal;
+}
+caption {
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  font-size: 0;
+  line-height: 0;
+  text-indent: -99999em;
+}
+u {
+  font-style: oblique;
+  text-decoration: none;
+}
+html body * {
+  box-sizing: border-box;
+}
+
+/* heding */
+.h1_type {
+  font-size: 32px;
+}
+.h2_type {
+  font-size: 28px;
+}
+.h3_type {
+  font-size: 24px;
+}
+.h4_type {
+  font-size: 20px;
+}
+.h5_type {
+  font-size: 18px;
+}
+
+/* button */
+button[class*='btn_basic'],
+a[class*='btn_basic'] {
+  display: inline-block;
+  height: 2.5rem;
+  font-size: 1.125rem;
+  padding: 0 1.25rem;
+  min-width: 120px;
+  line-height: 2.375rem;
+  text-align: center;
+  font-weight: 400;
+  cursor: pointer;
+  font-family: 'Ownglyph_kimkonghae', sans-serif;
+}
+button[class*='btn_basic'].big,
+a[class*='btn_basic'].big {
+  height: 3.75rem;
+  font-size: 1.125rem;
+  line-height: 3.625rem;
+  text-align: center;
+}
+button[class*='btn_basic'].small,
+a[class*='btn_basic'].small {
+  height: 2.125rem;
+  font-size: 1rem;
+  padding: 0 0.625rem;
+  min-width: 4.0625rem;
+  line-height: 2rem;
+}
+button[class*='btn_basic'].xsmall,
+a[class*='btn_basic'].xsmall {
+  height: 1.625rem;
+  font-size: 0.8125rem;
+  padding: 0 0.625rem;
+  min-width: 0.625rem;
+  line-height: 1.5rem;
+}
+button[class*='btn_basic'].round,
+a[class*='btn_basic'].round {
+  border-radius: 25px;
+}
+.btn_basic1 {
+  color: #fff;
+  border: 1px solid #2e2e33;
+  background-color: #45454d;
+}
+.btn_basic1:hover {
+  background-color: #2e2e33;
+}
+.btn_basic2 {
+  color: #ffffff !important;
+  border: 1px solid #c21d54;
+  background-color: #d51f5c;
+}
+.btn_basic2:hover {
+  background-color: #c21d54;
+}
