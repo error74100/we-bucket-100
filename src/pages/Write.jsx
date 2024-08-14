@@ -12,6 +12,17 @@ function Write() {
         <button>취소/완료</button>
       </div>
 
+      <div className="write_wrap">
+        <ul>
+          <li>
+            <div className="l_inner" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}>
+              <span className="number">1</span>
+              <p className="title">구경하기 1</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+
       <div>
         <h2 className="h3_type">사진</h2>
       </div>

@@ -101,6 +101,37 @@
   padding: 10px;
 }
 
+/* write */
+.write_wrap ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.write_wrap ul li {
+  flex: 1;
+}
+
+.write_wrap .l_inner {
+  position: relative;
+  padding-top: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 25px;
+  overflow: hidden;
+}
+.write_wrap .l_inner:before {
+  content: '';
+  display: block;
+  clear: both;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
 /* content nav */
 .content_nav {
   display: flex;
