@@ -1,6 +1,29 @@
 import ProgressBar from '@ramonak/react-progress-bar';
+import { db } from '../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Home() {
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    // Firestore에서 데이터 가져오기
+    const fetchData = async () => {
+      const querySnapshot = await getDocs(collection(db, 'posts'));
+      const docsData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setPosts(docsData);
+    };
+
+    fetchData();
+  }, []);
+
+  console.log(posts);
+
   return (
     <div className="home">
       <div className="progress_wrap">
@@ -10,42 +33,18 @@ function Home() {
 
       <div className="list_wrap">
         <ul>
-          <li>
-            <div
-              className="l_inner"
-              style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
-            >
-              <span className="number">1</span>
-              <p className="title">구경하기 1</p>
-            </div>
-          </li>
-
-          <li>
-            <div
-              className="l_inner"
-              style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
-            >
-              <span className="number">2</span>
-              <p className="title">구경하기 2</p>
-            </div>
-          </li>
-
-          <li>
-            <div
-              className="l_inner"
-              style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
-            >
-              <span className="number">3</span>
-              <p className="title">구경하기 3</p>
-            </div>
-          </li>
-
-          <li>
-            <div className="l_inner" style={{ backgroundImage: 'url()' }}>
-              <span className="number">4</span>
-              <p className="title">구경하기 4</p>
-            </div>
-          </li>
+          {posts.map((item, idx) => (
+            <li key={item.id}>
+              <Link
+                to={item.isComplete === false ? '/edit' : '/view'}
+                className="l_inner"
+                style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
+              >
+                <span className="number">{idx + 1}</span>
+                <p className="title">{item.title}</p>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

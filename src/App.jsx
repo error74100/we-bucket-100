@@ -9,6 +9,8 @@ import Header from './components/Header';
 import { auth } from './firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import Mypage from './pages/Mypage';
+import View from './pages/View';
+import Edit from './pages/Edit';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -23,7 +25,6 @@ function App() {
         setIsLogin(true);
       } else {
         // User is signed out
-        console.log('signed out');
         setIsLogin(false);
       }
     });
@@ -43,6 +44,8 @@ function App() {
         )}
 
         <Route path="/write" element={<Write />} />
+        <Route path="/view" element={<View />} />
+        <Route path="/edit" element={<Edit />} />
         <Route path="/mypage" element={<Mypage user={user} />} />
       </Routes>
     </div>

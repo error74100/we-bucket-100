@@ -6,6 +6,8 @@ import { getAuth } from 'firebase/auth';
 
 import { getStorage } from 'firebase/storage';
 
+import { getFirestore } from 'firebase/firestore';
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_APP_APIKEY,
@@ -24,3 +26,6 @@ export const auth = getAuth(app);
 
 // Firebase Storage 초기화
 export const storage = getStorage(app);
+
+// Initialize Cloud Firestore and get a reference to the service
+export const db = getFirestore(app);
