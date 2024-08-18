@@ -32,6 +32,7 @@ function View({ onEmotion }) {
           ...docSnap.data(),
           withDate: dateString,
         });
+        console.log(data);
       } else {
         console.log('No such document!');
       }
@@ -70,9 +71,13 @@ function View({ onEmotion }) {
             <h2 className="h3_type">사진</h2>
             <div>
               {/* 이미지 미리보기 */}
-              {image && (
+              {data.attachment && (
                 <div>
-                  <img src={image} alt="미리보기" style={{ width: '300px', height: '300px', objectFit: 'cover' }} />
+                  <img
+                    src={data.attachment}
+                    alt="미리보기"
+                    style={{ width: '300px', height: '300px', objectFit: 'cover' }}
+                  />
                 </div>
               )}
             </div>
