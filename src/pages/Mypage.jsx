@@ -23,9 +23,7 @@ function Mypage({ user }) {
       'state_changed',
       (snapshot) => {
         // 업로드 진행률 업데이트
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
         setProgress(progress);
       },
       (error) => {
@@ -52,7 +50,7 @@ function Mypage({ user }) {
             </p>
             <progress value={progress} max="100" />
             <br />
-            <input type="file" onChange={handleImageChange} />
+            <input type="file" accept="image/*" onChange={handleImageChange} />
             <button onClick={handleUpload}>Upload</button>
             <br />
             {url && <img src={url} alt="Uploaded" style={{ width: '300px' }} />}

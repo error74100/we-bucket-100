@@ -44,8 +44,8 @@ function App() {
         )}
 
         <Route path="/write" element={<Write />} />
-        <Route path="/view" element={<View />} />
-        <Route path="/edit" element={<Edit />} />
+        <Route path="/view/:docId" element={<View />} />
+        <Route path="/edit/:docId" element={<Edit />} />
         <Route path="/mypage" element={<Mypage user={user} />} />
       </Routes>
     </div>

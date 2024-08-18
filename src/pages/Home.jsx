@@ -22,8 +22,6 @@ function Home() {
     fetchData();
   }, []);
 
-  console.log(posts);
-
   return (
     <div className="home">
       <div className="progress_wrap">
@@ -36,12 +34,14 @@ function Home() {
           {posts.map((item, idx) => (
             <li key={item.id}>
               <Link
-                to={item.isComplete === false ? '/edit' : '/view'}
+                to={item.isComplete === false ? `/edit/${item.id}` : `/view/${item.id}`}
                 className="l_inner"
                 style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
               >
                 <span className="number">{idx + 1}</span>
-                <p className="title">{item.title}</p>
+                <p className="title">
+                  {item.title} / {item.id}
+                </p>
               </Link>
             </li>
           ))}
