@@ -33,7 +33,7 @@ function EmotionItem({ emotionId, active, onEmotion }) {
             onEmotion !== 'none' ? onEmotion(emotionId) : '';
           }}
         />
-        <img src="https://via.placeholder.com/150" alt={emotionTxt} />
+        <img src={`/img/emotion_${emotionId}.png`} alt={emotionTxt} />
         <span>{emotionTxt}</span>
       </label>
     </div>

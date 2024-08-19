@@ -59,7 +59,10 @@ function View({ onEmotion }) {
           <div className="write_wrap">
             <ul>
               <li>
-                <div className="l_inner" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}>
+                <div
+                  className="l_inner blank_type"
+                  style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
+                >
                   <span className="number">1</span>
                   <p className="title">구경하기 1</p>
                 </div>
@@ -76,7 +79,11 @@ function View({ onEmotion }) {
                   <img
                     src={data.attachment}
                     alt="미리보기"
-                    style={{ width: '300px', height: '300px', objectFit: 'cover' }}
+                    style={{
+                      width: '300px',
+                      height: '300px',
+                      objectFit: 'cover',
+                    }}
                   />
                 </div>
               )}

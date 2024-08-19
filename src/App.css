@@ -1,5 +1,11 @@
+body {
+  background-color: #f3d5dc;
+}
+
 /* layout */
 .App {
+  max-width: 1000px;
+  margin: 0 auto;
   padding: 20px;
 }
 
@@ -74,6 +80,10 @@
   top: 0;
   right: 0;
   bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.home .list_wrap .l_inner.blank_type:before {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
@@ -130,7 +140,25 @@
   top: 0;
   right: 0;
   bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+.write_wrap .l_inner.blank_type:before {
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+.write_wrap .l_inner .number {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  font-size: 1rem;
+  padding: 0;
+  background-color: #222;
+  color: #fff;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  text-align: center;
 }
 
 /* content nav */
@@ -158,8 +186,12 @@
 .content_nav .title {
   flex: 1;
   text-align: center;
+  line-height: 1;
+  padding: 0 1.25rem;
 }
 .content_nav button {
+  height: 34px;
+  line-height: 32px;
 }
 
 .emotion_container {
@@ -173,17 +205,26 @@
   text-align: center;
 }
 
+.emotion_container .emotion-box input[type='radio'] {
+  display: none;
+}
+
 .emotion_container img {
   width: 100%;
-  height: 150px;
   object-fit: cover;
   border: 2px solid transparent;
   cursor: pointer;
 }
 
+.emotion_container input[type='radio'] + img {
+  border-radius: 5px;
+  padding: 1.25rem;
+}
+
 .emotion_container input[type='radio']:checked + img,
 .emotion_container input[type='radio'].active + img {
-  border-color: blue;
+  border-color: #cd2591;
+  background-color: #cd2591;
 }
 
 /* view */
@@ -193,7 +234,27 @@
 
 .view_group {
   padding: 0.625rem 0;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px dotted #c48090;
+}
+
+.view_group textarea {
+  width: 100%;
+  outline: none;
+  resize: none;
+}
+
+/* loading */
+.loading_bar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
 }
 
 @media (max-width: 768px) {

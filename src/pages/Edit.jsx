@@ -48,7 +48,10 @@ function Edit() {
 
         // 필드 값이 문자열이고 길이가 1 이상인지 확인
         if (docSnap.data().attachment.length > 1) {
-          console.log('String field is valid:', docSnap.data().attachment.length);
+          console.log(
+            'String field is valid:',
+            docSnap.data().attachment.length
+          );
           setisImg(true);
         } else {
           console.log('String field is invalid or too short.');
@@ -119,7 +122,9 @@ function Edit() {
       'state_changed',
       (snapshot) => {
         // 업로드 진행률 업데이트
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
         setProgress(progress);
       },
       (error) => {
@@ -166,41 +171,69 @@ function Edit() {
               뒤로가기
             </Link>
             <span className="title">
-              <input type="text" value={title} onChange={onTitle} placeholder="제목..." />
+              <input
+                type="text"
+                value={title}
+                onChange={onTitle}
+                placeholder="제목..."
+              />
             </span>
 
-            <button onClick={onSave}>저장</button>
+            <button onClick={onSave} className="btn_basic2">
+              저장
+            </button>
           </div>
 
           <div className="write_wrap">
             <ul>
               <li>
-                <div className="l_inner" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}>
-                  <span className="number">1</span>
-                  <p className="title">구경하기 1</p>
-                </div>
+                {/* <div className="l_inner" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}> */}
+
+                {isImg === true ? (
+                  <div
+                    className="l_inner"
+                    style={{ backgroundImage: `url(${data.attachment})` }}
+                  >
+                    <span className="number">{data.seq}</span>
+                  </div>
+                ) : (
+                  <div
+                    className="l_inner blank_type"
+                    style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
+                  >
+                    <span className="number">{data.seq}</span>
+                  </div>
+                )}
               </li>
             </ul>
           </div>
 
-          {isImg === true ? '<p>ture</p>' : '<p>false</p>'}
-
           <div className="view_group">
             <h2 className="h3_type">사진</h2>
+
             <div>
-              <progress value={progress} max="100" />
-              <br />
               {/* 이미지 파일 선택 input */}
-              <input type="file" accept="image/*" onChange={handleImageChange} />
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
 
               {/* 이미지 미리보기 */}
               {previewImage && (
                 <div>
-                  <img
-                    src={previewImage}
-                    alt="미리보기"
-                    style={{ width: '300px', height: '300px', objectFit: 'cover' }}
-                  />
+                  <p>
+                    <img
+                      src={previewImage}
+                      alt="미리보기"
+                      style={{
+                        width: '300px',
+                        height: '300px',
+                        objectFit: 'cover',
+                      }}
+                    />
+                  </p>
+                  <p>[미리보기]</p>
                 </div>
               )}
             </div>
@@ -225,8 +258,21 @@ function Edit() {
 
           <div className="view_group">
             <h2 className="h3_type">내용</h2>
-            <textarea value={data.contents} onChange={onContent} rows="4" cols="50" placeholder="내용..."></textarea>
+            <textarea
+              value={data.contents}
+              onChange={onContent}
+              rows="5"
+              placeholder="내용..."
+            ></textarea>
           </div>
+
+          {progress > 0 ? (
+            <div className="loading_bar">
+              <progress value={progress} max="100" />
+            </div>
+          ) : (
+            ''
+          )}
         </>
       )}
     </div>
