@@ -116,6 +116,7 @@ body {
 .write_wrap ul {
   display: flex;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .write_wrap ul li {
@@ -158,6 +159,54 @@ body {
   width: 25px;
   height: 25px;
   border-radius: 50%;
+  text-align: center;
+}
+
+.upload_wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  padding-top: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 25px;
+  overflow: hidden;
+  border: 1px solid red;
+}
+
+.upload_wrap input[type='file'] {
+  display: none;
+}
+
+.upload_wrap .custom-file-upload {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  transform: translate3d(-50px, -50px, 0);
+  z-index: 10;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+}
+
+.preview_img_wrap {
+  text-align: center;
+  border: 1px solid #c48090;
+  padding: 10px;
+  margin: 10px 0;
+}
+
+.view_group .react-datepicker-wrapper {
+  position: absolute;
+  top: 10px;
+  right: 25px;
+}
+
+.view_group .react-datepicker-wrapper input[type='text'] {
   text-align: center;
 }
 
@@ -233,6 +282,7 @@ body {
 }
 
 .view_group {
+  position: relative;
   padding: 0.625rem 0;
   border-bottom: 1px dotted #c48090;
 }
@@ -241,6 +291,12 @@ body {
   width: 100%;
   outline: none;
   resize: none;
+}
+
+.view_group .flex_wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* loading */

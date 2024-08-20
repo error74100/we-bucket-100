@@ -147,6 +147,7 @@ input[type='email'],
 input[type='tel'] {
   width: 100%;
   height: 34px;
+  font-size: 1.25rem;
   padding: 0 7px;
   border: 1px solid #ccc;
   border-radius: 0 !important;
@@ -154,14 +155,17 @@ input[type='tel'] {
   outline: none;
   line-height: 32px;
   color: #333;
+  font-family: 'Ownglyph_kimkonghae', sans-serif;
 }
 input[type='file'] {
+  font-size: 1.25rem;
   line-height: 1;
   padding: 0 7px;
   border: 1px solid #ccc;
   cursor: pointer;
   outline: none;
   background-color: #fff;
+  font-family: 'Ownglyph_kimkonghae', sans-serif;
 }
 input[type='text']:focus,
 input[type='password']:focus,
@@ -175,4 +179,9 @@ input[disabled='disabled'],
 input[disabled] {
   background-color: #f2f2f2;
   color: #999;
+}
+
+textarea {
+  font-size: 1.25rem;
+  font-family: 'Ownglyph_kimkonghae', sans-serif;
 }

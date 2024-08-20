@@ -71,38 +71,19 @@ function View({ onEmotion }) {
           </div>
 
           <div className="view_group">
-            <h2 className="h3_type">사진</h2>
-            <div>
-              {/* 이미지 미리보기 */}
-              {data.attachment && (
-                <div>
-                  <img
-                    src={data.attachment}
-                    alt="미리보기"
-                    style={{
-                      width: '300px',
-                      height: '300px',
-                      objectFit: 'cover',
-                    }}
-                  />
-                </div>
-              )}
+            <div className="flex_wrap">
+              <h2 className="h3_type">함께한 날짜</h2>
+              <div>{data.withDate}</div>
             </div>
           </div>
 
           <div className="view_group">
-            <h2 className="h3_type">함께한 날짜</h2>
-            <div>{data.withDate}</div>
-          </div>
-
-          <div className="view_group">
             <h2 className="h3_type">감정 상태</h2>
-            <div>{data.emotionId}</div>
             <Emotion emotionId={data.emotionId} onEmotion={'none'} />
           </div>
 
           <div className="view_group">
-            <h2 className="h3_type">내용</h2>
+            <h2 className="h3_type">기록</h2>
             <p>{data.contents}</p>
           </div>
         </div>

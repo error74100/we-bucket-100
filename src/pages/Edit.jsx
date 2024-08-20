@@ -154,6 +154,10 @@ function Edit() {
     );
   };
 
+  const onImageFile = (e) => {
+    console.log('on image file..');
+  };
+
   const onSave = (e) => {
     if (confirm('저장 하시겠습니까?')) {
       onEmotion();
@@ -187,8 +191,6 @@ function Edit() {
           <div className="write_wrap">
             <ul>
               <li>
-                {/* <div className="l_inner" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}> */}
-
                 {isImg === true ? (
                   <div
                     className="l_inner"
@@ -204,6 +206,19 @@ function Edit() {
                     <span className="number">{data.seq}</span>
                   </div>
                 )}
+
+                <div onClick={onImageFile} className="upload_wrap">
+                  <label htmlFor="file-upload" className="custom-file-upload">
+                    ## 파일 선택 ##
+                  </label>
+                  {/* 이미지 파일 선택 input */}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id="file-upload"
+                    onChange={handleImageChange}
+                  />
+                </div>
               </li>
             </ul>
           </div>
@@ -212,16 +227,9 @@ function Edit() {
             <h2 className="h3_type">사진</h2>
 
             <div>
-              {/* 이미지 파일 선택 input */}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-
               {/* 이미지 미리보기 */}
               {previewImage && (
-                <div>
+                <div className="preview_img_wrap">
                   <p>
                     <img
                       src={previewImage}
@@ -233,22 +241,24 @@ function Edit() {
                       }}
                     />
                   </p>
-                  <p>[미리보기]</p>
+                  <p>[이미지 미리보기]</p>
                 </div>
               )}
             </div>
           </div>
 
           <div className="view_group">
-            <h2 className="h3_type">함께한 날짜</h2>
-            <DatePicker
-              locale={ko}
-              selected={startDate}
-              onChange={(date) => {
-                setStartDate(date);
-              }}
-              dateFormat="yyyy년 MM월 dd일"
-            />
+            <div className="flex_wrap">
+              <h2 className="h3_type">함께한 날짜</h2>
+              <DatePicker
+                locale={ko}
+                selected={startDate}
+                onChange={(date) => {
+                  setStartDate(date);
+                }}
+                dateFormat="yyyy년 MM월 dd일"
+              />
+            </div>
           </div>
 
           <div className="view_group">
