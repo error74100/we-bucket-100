@@ -79,11 +79,13 @@ function Write() {
   };
 
   const onSave = (e) => {
-    onEmotion();
-    writePostData();
+    if (confirm('저장 하시겠습니까?')) {
+      onEmotion();
+      writePostData();
 
-    alert('저장 되었습니다.');
-    nav('/', { replace: true });
+      alert('저장 되었습니다.');
+      nav('/', { replace: true });
+    }
   };
 
   return (
@@ -93,16 +95,26 @@ function Write() {
           뒤로가기
         </Link>
         <span className="title">
-          <input type="text" value={title} onChange={onTitle} placeholder="제목..." />
+          <input
+            type="text"
+            value={title}
+            onChange={onTitle}
+            placeholder="제목..."
+          />
         </span>
 
-        <button onClick={onSave}>저장</button>
+        <button onClick={onSave} className="btn_basic2">
+          저장
+        </button>
       </div>
 
       <div className="write_wrap">
         <ul>
           <li>
-            <div className="l_inner" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}>
+            <div
+              className="l_inner blank_type"
+              style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
+            >
               <span className="number">1</span>
               <p className="title">구경하기 1</p>
             </div>
@@ -110,23 +122,7 @@ function Write() {
         </ul>
       </div>
 
-      <div>
-        <h2 className="h3_type">사진</h2>
-        <div>
-          <progress value={progress} max="100" />
-          <br />
-          {/* 이미지 파일 선택 input */}
-          <input type="file" accept="image/*" onChange={handleImageChange} />
-
-          {/* 이미지 미리보기 */}
-          {image && (
-            <div>
-              <img src={image} alt="미리보기" style={{ width: '300px', height: '300px', objectFit: 'cover' }} />
-            </div>
-          )}
-        </div>
-      </div>
-      <div>
+      <div className="view_group">
         <h2 className="h3_type">함께한 날짜</h2>
         <DatePicker
           locale={ko}
@@ -135,12 +131,14 @@ function Write() {
           dateFormat="yyyy년 MM월 dd일"
         />
       </div>
-      <div>
+
+      <div className="view_group">
         <h2 className="h3_type">감정 상태</h2>
 
         <Emotion emotionId={emotion} onEmotion={onEmotion} />
       </div>
-      <div>
+
+      <div className="view_group">
         <h2 className="h3_type">내용</h2>
 
         <textarea

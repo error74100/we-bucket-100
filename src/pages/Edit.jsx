@@ -14,6 +14,7 @@ function Edit() {
   const [title, setTitle] = useState('');
   const [previewImage, setPreviewImage] = useState(null);
   const [image, setImage] = useState(null);
+  const [saveImage, setSaveImage] = useState('');
   const [progress, setProgress] = useState(0);
   const [startDate, setStartDate] = useState(null);
   const [isImg, setisImg] = useState(false);
@@ -48,13 +49,8 @@ function Edit() {
 
         // 필드 값이 문자열이고 길이가 1 이상인지 확인
         if (docSnap.data().attachment.length > 1) {
-          console.log(
-            'String field is valid:',
-            docSnap.data().attachment.length
-          );
           setisImg(true);
         } else {
-          console.log('String field is invalid or too short.');
           setisImg(false);
         }
       } else {
@@ -68,16 +64,25 @@ function Edit() {
   const updatePostData = async () => {
     const postRef = doc(db, 'posts', param.docId);
 
-    console.log('url= ' + url);
+    setSaveImage(data.attachment);
 
-    await updateDoc(postRef, {
-      title: title,
-      // attachment: '',
-      withDate: startDate,
-      emotionId: data.emotionId,
-      contents: data.contents,
-      // isComplete: false
-    });
+    try {
+      await updateDoc(postRef, {
+        title: title,
+        attachment: saveImage,
+        withDate: startDate,
+        emotionId: data.emotionId,
+        contents: data.contents,
+        isComplete: isImg,
+      });
+
+      if (image === null) {
+        alert('저장 되었습니다.');
+        nav(`/view/${param.docId}`, { replace: true });
+      }
+    } catch (error) {
+      console.error('Error saving image URL to Firestore: ', error);
+    }
   };
 
   const onTitle = (e) => {
@@ -94,14 +99,21 @@ function Edit() {
   // 이미지 파일 선택 시 실행되는 함수
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    const maxSizeInMB = 5;
+    const maxSizeInBytes = maxSizeInMB * 1024 * 1024;
 
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreviewImage(reader.result); // 이미지 미리보기를 위해 상태로 저장
-      };
-      reader.readAsDataURL(file); // 파일을 base64 URL로 변환
-      setImage(e.target.files[0]);
+    if (file.size > maxSizeInBytes) {
+      alert('5MB 이하로 올려주세요.');
+      e.target.value = ''; // 파일 input을 초기화하여 업로드를 막음
+    } else {
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setPreviewImage(reader.result); // 이미지 미리보기를 위해 상태로 저장
+        };
+        reader.readAsDataURL(file); // 파일을 base64 URL로 변환
+        setImage(e.target.files[0]);
+      }
     }
   };
 
@@ -135,18 +147,18 @@ function Edit() {
         try {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setUrl(downloadURL); // 상태에 URL 저장
-          console.log('Download URL: ', downloadURL);
 
           // Firestore의 해당 문서 필드에 이미지 URL 저장
           const docRef = doc(db, 'posts', param.docId); // Firestore에서 업데이트할 문서 참조
 
           await updateDoc(docRef, {
             attachment: downloadURL, // 필드에 이미지 URL 저장
+            isComplete: true,
           });
 
           // 추가 작업이 있다면 여기서 호출
           alert('저장 되었습니다.');
-          nav('/', { replace: true });
+          nav(`/view/${param.docId}`, { replace: true });
         } catch (error) {
           console.error('Error saving image URL to Firestore: ', error);
         }
@@ -154,8 +166,10 @@ function Edit() {
     );
   };
 
-  const onImageFile = (e) => {
-    console.log('on image file..');
+  const onDeleteImage = () => {
+    if (confirm('이미지를 삭제 하시겠습니까? (삭제 후 복구 불가능)')) {
+      setisImg(false);
+    }
   };
 
   const onSave = (e) => {
@@ -197,6 +211,9 @@ function Edit() {
                     style={{ backgroundImage: `url(${data.attachment})` }}
                   >
                     <span className="number">{data.seq}</span>
+                    <span className="close_btn" onClick={onDeleteImage}>
+                      이미지 삭제하기 1
+                    </span>
                   </div>
                 ) : (
                   <div
@@ -207,9 +224,19 @@ function Edit() {
                   </div>
                 )}
 
-                <div onClick={onImageFile} className="upload_wrap">
+                {/* 업로드 사진 미리보기 */}
+                {previewImage && (
+                  <div
+                    className="l_inner preview_type"
+                    style={{ backgroundImage: `url(${previewImage})` }}
+                  >
+                    <span className="number">{data.seq}</span>
+                  </div>
+                )}
+
+                <div className="upload_wrap">
                   <label htmlFor="file-upload" className="custom-file-upload">
-                    ## 파일 선택 ##
+                    파일 선택
                   </label>
                   {/* 이미지 파일 선택 input */}
                   <input
@@ -221,30 +248,6 @@ function Edit() {
                 </div>
               </li>
             </ul>
-          </div>
-
-          <div className="view_group">
-            <h2 className="h3_type">사진</h2>
-
-            <div>
-              {/* 이미지 미리보기 */}
-              {previewImage && (
-                <div className="preview_img_wrap">
-                  <p>
-                    <img
-                      src={previewImage}
-                      alt="미리보기"
-                      style={{
-                        width: '300px',
-                        height: '300px',
-                        objectFit: 'cover',
-                      }}
-                    />
-                  </p>
-                  <p>[이미지 미리보기]</p>
-                </div>
-              )}
-            </div>
           </div>
 
           <div className="view_group">
@@ -262,7 +265,7 @@ function Edit() {
           </div>
 
           <div className="view_group">
-            <h2 className="h3_type">감정 상태 / {data.emotionId}</h2>
+            <h2 className="h3_type">감정 상태</h2>
             <Emotion emotionId={data.emotionId} onEmotion={onEmotion} />
           </div>
 

@@ -51,6 +51,10 @@ body {
   flex: 1;
 }
 
+.home .progress_wrap .progress_item > div > div {
+  background-color: #c21d54 !important;
+}
+
 .home .list_wrap ul {
   display: flex;
   flex-wrap: wrap;
@@ -147,6 +151,14 @@ body {
   background-color: rgba(0, 0, 0, 0.6);
 }
 
+.write_wrap .l_inner.preview_type {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 8;
+}
+
 .write_wrap .l_inner .number {
   display: inline-block;
   position: absolute;
@@ -160,6 +172,44 @@ body {
   height: 25px;
   border-radius: 50%;
   text-align: center;
+  z-index: 5;
+}
+
+.write_wrap .l_inner .close_btn {
+  display: inline-block;
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  font-size: 0;
+  background-color: #222;
+  border-radius: 50%;
+  text-align: center;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.write_wrap .l_inner .close_btn:before,
+.write_wrap .l_inner .close_btn:after {
+  content: '';
+  display: block;
+  clear: both;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 18px;
+  height: 2px;
+  background-color: #fff;
+}
+
+.write_wrap .l_inner .close_btn:before {
+  transform: translate3d(-10px, -1px, 0px) rotate(-45deg);
+}
+
+.write_wrap .l_inner .close_btn:after {
+  transform: translate3d(-10px, -1px, 0px) rotate(45deg);
 }
 
 .upload_wrap {
@@ -173,7 +223,6 @@ body {
   background-size: cover;
   border-radius: 25px;
   overflow: hidden;
-  border: 1px solid red;
 }
 
 .upload_wrap input[type='file'] {
@@ -187,10 +236,35 @@ body {
   right: 0;
   width: 100px;
   height: 100px;
+  font-size: 0;
   transform: translate3d(-50px, -50px, 0);
   z-index: 10;
   border-radius: 50%;
   border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.upload_wrap .custom-file-upload::before,
+.upload_wrap .custom-file-upload::after {
+  content: '';
+  clear: both;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background-color: #ddd;
+}
+
+.upload_wrap .custom-file-upload::before {
+  width: 50px;
+  height: 6px;
+  transform: translate3d(-25px, -3px, 0);
+}
+
+.upload_wrap .custom-file-upload::after {
+  width: 6px;
+  height: 50px;
+  transform: translate3d(-3px, -25px, 0);
 }
 
 .preview_img_wrap {
@@ -202,7 +276,7 @@ body {
 
 .view_group .react-datepicker-wrapper {
   position: absolute;
-  top: 10px;
+  top: 20px;
   right: 25px;
 }
 
@@ -237,6 +311,9 @@ body {
   text-align: center;
   line-height: 1;
   padding: 0 1.25rem;
+}
+.content_nav .title input[type='text'] {
+  text-align: center;
 }
 .content_nav button {
   height: 34px;
@@ -283,7 +360,7 @@ body {
 
 .view_group {
   position: relative;
-  padding: 0.625rem 0;
+  padding: 1.25rem 0;
   border-bottom: 1px dotted #c48090;
 }
 
@@ -311,6 +388,18 @@ body {
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
+}
+
+/* not_found_page */
+.not_found_page {
+  text-align: center;
+  margin: 20px 0;
+  padding: 100px 20px;
+  border: 1px solid #c21d54;
+}
+
+.not_found_page .type2 {
+  padding: 20px 0 0 0;
 }
 
 @media (max-width: 768px) {

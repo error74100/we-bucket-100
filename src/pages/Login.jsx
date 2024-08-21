@@ -1,7 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { auth } from '../firebase';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-// import { collection, addDoc } from 'firebase/firestore';
+import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useState } from 'react';
@@ -11,14 +9,17 @@ function Login() {
   const provider = new GoogleAuthProvider();
   const [uid, setUid] = useState('');
   const [photoURL, setPhotoURL] = useState('');
+  const auth = getAuth();
 
   const googleLogin = () =>
     signInWithPopup(auth, provider)
       .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
+        const user = result.user;
 
-        addUserInfo();
+        // 준비중
+        // addUserInfo();
 
         alert('로그인 되었습니다.');
         nav('/');
@@ -40,9 +41,6 @@ function Login() {
     const cityRef = doc(db, 'users', 'BJ');
 
     setUid();
-
-    console.log(auth.currentUser.auth.currentUser.uid);
-    console.log(auth.currentUser.auth.currentUser.photoURL);
 
     setDoc(
       cityRef,

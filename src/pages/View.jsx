@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 
 import { db } from '../firebase';
 import Emotion from '../components/Emotion';
 
-function View({ onEmotion }) {
+function View() {
   const param = useParams();
   const [data, setData] = useState({});
+  const [isImg, setisImg] = useState(false);
   const [image, setImage] = useState(null);
   const [emotion, setEmotion] = useState(3);
   const [withDate, setWidthDate] = useState(null);
+  const nav = useNavigate();
 
   const getDocument = async () => {
     const docRef = doc(db, 'posts', param.docId);
@@ -32,7 +34,13 @@ function View({ onEmotion }) {
           ...docSnap.data(),
           withDate: dateString,
         });
-        console.log(data);
+
+        // 필드 값이 문자열이고 길이가 1 이상인지 확인
+        if (docSnap.data().attachment.length > 1) {
+          setisImg(true);
+        } else {
+          setisImg(false);
+        }
       } else {
         console.log('No such document!');
       }
@@ -45,6 +53,10 @@ function View({ onEmotion }) {
     getDocument();
   }, []);
 
+  const onEdit = () => {
+    nav(`/edit/${param.docId}`);
+  };
+
   return (
     <>
       {data && (
@@ -54,18 +66,29 @@ function View({ onEmotion }) {
               뒤로가기
             </Link>
             <span className="title">{data.title}</span>
+            <button onClick={onEdit} className="btn_basic3">
+              수정
+            </button>
           </div>
 
           <div className="write_wrap">
             <ul>
               <li>
-                <div
-                  className="l_inner blank_type"
-                  style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
-                >
-                  <span className="number">1</span>
-                  <p className="title">구경하기 1</p>
-                </div>
+                {isImg === true ? (
+                  <div
+                    className="l_inner"
+                    style={{ backgroundImage: `url(${data.attachment})` }}
+                  >
+                    <span className="number">{data.seq}</span>
+                  </div>
+                ) : (
+                  <div
+                    className="l_inner blank_type"
+                    style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
+                  >
+                    <span className="number">{data.seq}</span>
+                  </div>
+                )}
               </li>
             </ul>
           </div>

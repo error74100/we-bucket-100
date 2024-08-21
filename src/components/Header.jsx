@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 
-function Header() {
+function Header({ userObj }) {
   const nav = useNavigate();
   const auth = getAuth();
 
@@ -31,14 +31,20 @@ function Header() {
       >
         Home
       </button>
-      <button
-        onClick={() => {
-          nav('/write');
-        }}
-        className="btn_basic1 small round"
-      >
-        Write
-      </button>
+
+      {userObj.email === import.meta.env.VITE_APP_ADMIN_EMAIL ? (
+        <button
+          onClick={() => {
+            nav('/write');
+          }}
+          className="btn_basic1 small round"
+        >
+          Write
+        </button>
+      ) : (
+        ''
+      )}
+
       <button
         onClick={() => {
           nav('/mypage');

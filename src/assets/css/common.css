@@ -136,6 +136,14 @@ a[class*='btn_basic'].round {
 .btn_basic2:hover {
   background-color: #c21d54;
 }
+.btn_basic3 {
+  color: #c21d54 !important;
+  border: 1px solid #c21d54;
+  background-color: #fff;
+}
+.btn_basic3:hover {
+  background-color: #fdedf2;
+}
 
 /* input */
 input[type='text']::-ms-clear {
