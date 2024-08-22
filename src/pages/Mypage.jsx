@@ -23,7 +23,9 @@ function Mypage({ user }) {
       'state_changed',
       (snapshot) => {
         // 업로드 진행률 업데이트
-        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
         setProgress(progress);
       },
       (error) => {
@@ -42,7 +44,7 @@ function Mypage({ user }) {
     <>
       {user && (
         <>
-          <div>Mypage</div>
+          <div>Mypage (작업 중)</div>
 
           <div>
             <p>

@@ -59,25 +59,12 @@ function Edit() {
   const updatePostData = async () => {
     const postRef = doc(db, 'posts', param.docId);
 
-    console.log('saveImage= ' + saveImage);
-
-    console.log('data.isComplte= ' + data.isComplete);
-
-    // if (data.isComplete) {
-    //   console.log('Data = true = ' + data);
-    // } else {
-    //   console.log('Data = false = ' + data);
-    // }
-
     if (!image) {
       // 변경 이미지 없을 때.
-      console.log('image = 없을 때 = ' + data);
-      console.log('data = ' + data.attachment);
-
       try {
         await updateDoc(postRef, {
           title: title,
-          attachment: saveImage,
+          attachment: data.attachment,
           withDate: startDate,
           emotionId: data.emotionId,
           contents: data.contents,
@@ -85,7 +72,7 @@ function Edit() {
         });
 
         if (image === null) {
-          alert('저장 되었습니다. 11 ');
+          alert('저장 되었습니다.');
           nav(`/view/${param.docId}`, { replace: true });
         }
       } catch (error) {
@@ -93,12 +80,9 @@ function Edit() {
       }
     } else {
       // 변경 이미지 있을 때.
-      console.log('image = 있을 때 = ' + data);
-
       try {
         await updateDoc(postRef, {
           title: title,
-          attachment: saveImage,
           withDate: startDate,
           emotionId: data.emotionId,
           contents: data.contents,
@@ -106,7 +90,7 @@ function Edit() {
         });
 
         if (image === null) {
-          alert('저장 되었습니다. 22');
+          alert('저장 되었습니다.');
           nav(`/view/${param.docId}`, { replace: true });
         }
       } catch (error) {
@@ -157,7 +141,6 @@ function Edit() {
   const handleUpload = () => {
     if (!image) return;
 
-    alert('handleUpload 222!!');
     const storageRef = ref(storage, `posts/${param.docId}/attachment_img.jpg`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
@@ -199,6 +182,9 @@ function Edit() {
 
   const onDeleteImage = () => {
     if (confirm('이미지를 삭제 하시겠습니까? (삭제 후 복구 불가능)')) {
+      const fileInput = document.getElementById('file-upload');
+
+      data.attachment = '';
       setisImg(false);
     }
   };
