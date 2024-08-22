@@ -11,7 +11,7 @@ function View() {
   const [isImg, setisImg] = useState(false);
   const [image, setImage] = useState(null);
   const [emotion, setEmotion] = useState(3);
-  const [withDate, setWidthDate] = useState(null);
+  const [withDate, setWithDate] = useState(null);
   const nav = useNavigate();
 
   const getDocument = async () => {
@@ -32,8 +32,9 @@ function View() {
       if (docSnap.exists()) {
         setData({
           ...docSnap.data(),
-          withDate: dateString,
         });
+
+        setWithDate(dateString);
 
         // 필드 값이 문자열이고 길이가 1 이상인지 확인
         if (docSnap.data().attachment.length > 1) {
@@ -96,7 +97,7 @@ function View() {
           <div className="view_group">
             <div className="flex_wrap">
               <h2 className="h3_type">함께한 날짜</h2>
-              <div>{data.withDate}</div>
+              <div>{withDate}</div>
             </div>
           </div>
 

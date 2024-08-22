@@ -34,11 +34,6 @@ function Edit() {
       const timestamp = docSnap.data().withDate;
       const day = timestamp.toDate();
 
-      let year = day.getFullYear();
-      let month = ('0' + (day.getMonth() + 1)).slice(-2);
-      let days = ('0' + day.getDate()).slice(-2);
-      let dateString = year + '-' + month + '-' + days;
-
       // 문서가 존재하는지 확인
       if (docSnap.exists()) {
         setData({
@@ -64,24 +59,59 @@ function Edit() {
   const updatePostData = async () => {
     const postRef = doc(db, 'posts', param.docId);
 
-    setSaveImage(data.attachment);
+    console.log('saveImage= ' + saveImage);
 
-    try {
-      await updateDoc(postRef, {
-        title: title,
-        attachment: saveImage,
-        withDate: startDate,
-        emotionId: data.emotionId,
-        contents: data.contents,
-        isComplete: isImg,
-      });
+    console.log('data.isComplte= ' + data.isComplete);
 
-      if (image === null) {
-        alert('저장 되었습니다.');
-        nav(`/view/${param.docId}`, { replace: true });
+    // if (data.isComplete) {
+    //   console.log('Data = true = ' + data);
+    // } else {
+    //   console.log('Data = false = ' + data);
+    // }
+
+    if (!image) {
+      // 변경 이미지 없을 때.
+      console.log('image = 없을 때 = ' + data);
+      console.log('data = ' + data.attachment);
+
+      try {
+        await updateDoc(postRef, {
+          title: title,
+          attachment: saveImage,
+          withDate: startDate,
+          emotionId: data.emotionId,
+          contents: data.contents,
+          isComplete: isImg,
+        });
+
+        if (image === null) {
+          alert('저장 되었습니다. 11 ');
+          nav(`/view/${param.docId}`, { replace: true });
+        }
+      } catch (error) {
+        console.error('Error saving image URL to Firestore: ', error);
       }
-    } catch (error) {
-      console.error('Error saving image URL to Firestore: ', error);
+    } else {
+      // 변경 이미지 있을 때.
+      console.log('image = 있을 때 = ' + data);
+
+      try {
+        await updateDoc(postRef, {
+          title: title,
+          attachment: saveImage,
+          withDate: startDate,
+          emotionId: data.emotionId,
+          contents: data.contents,
+          isComplete: isImg,
+        });
+
+        if (image === null) {
+          alert('저장 되었습니다. 22');
+          nav(`/view/${param.docId}`, { replace: true });
+        }
+      } catch (error) {
+        console.error('Error saving image URL to Firestore: ', error);
+      }
     }
   };
 
@@ -127,6 +157,7 @@ function Edit() {
   const handleUpload = () => {
     if (!image) return;
 
+    alert('handleUpload 222!!');
     const storageRef = ref(storage, `posts/${param.docId}/attachment_img.jpg`);
     const uploadTask = uploadBytesResumable(storageRef, image);
 
@@ -212,7 +243,7 @@ function Edit() {
                   >
                     <span className="number">{data.seq}</span>
                     <span className="close_btn" onClick={onDeleteImage}>
-                      이미지 삭제하기 1
+                      이미지 삭제하기
                     </span>
                   </div>
                 ) : (

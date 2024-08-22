@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 
 function Header({ userObj }) {
@@ -20,43 +20,40 @@ function Header({ userObj }) {
   };
 
   return (
-    <header className="header">
-      <h1>logo</h1>
+    <>
+      <header className="header">
+        <h1>
+          <Link to="/">
+            <img src="/logo.png" alt="logo" />
+          </Link>
+        </h1>
 
-      <button
-        onClick={() => {
-          nav('/');
-        }}
-        className="btn_basic1 small round"
-      >
-        Home
-      </button>
+        {userObj.email === import.meta.env.VITE_APP_ADMIN_EMAIL ? (
+          <button
+            onClick={() => {
+              nav('/write');
+            }}
+            className="btn_basic1 small round"
+          >
+            Write
+          </button>
+        ) : (
+          ''
+        )}
 
-      {userObj.email === import.meta.env.VITE_APP_ADMIN_EMAIL ? (
         <button
           onClick={() => {
-            nav('/write');
+            nav('/mypage');
           }}
           className="btn_basic1 small round"
         >
-          Write
+          My page
         </button>
-      ) : (
-        ''
-      )}
-
-      <button
-        onClick={() => {
-          nav('/mypage');
-        }}
-        className="btn_basic1 small round"
-      >
-        My page
-      </button>
-      <button onClick={onLogout} className="btn_basic1 small round">
-        Logout
-      </button>
-    </header>
+        <button onClick={onLogout} className="btn_basic1 small round">
+          Logout
+        </button>
+      </header>
+    </>
   );
 }
 

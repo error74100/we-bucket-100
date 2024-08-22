@@ -3,6 +3,7 @@ import { db } from '../firebase';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -56,45 +57,62 @@ function Home() {
     }
   };
 
+  const handleScrollTo = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="home">
-      <div className="progress_wrap">
-        {posts && (
-          <span>
-            {completeCount}/{maxSeq}
-          </span>
-        )}
+    <>
+      <div className="home">
+        <div className="progress_wrap">
+          {posts && (
+            <span>
+              {completeCount}/{maxSeq}
+            </span>
+          )}
 
-        <ProgressBar completed={completeRate} className="progress_item" />
+          <ProgressBar completed={completeRate} className="progress_item" />
+        </div>
+
+        <div className="list_wrap">
+          <ul>
+            {posts.map((item, idx) => (
+              <li key={item.id}>
+                <Link
+                  to={
+                    item.isComplete === false
+                      ? `/edit/${item.id}`
+                      : `/view/${item.id}`
+                  }
+                  className={
+                    item.attachment.length > 0
+                      ? 'l_inner'
+                      : 'l_inner blank_type'
+                  }
+                  style={
+                    item.attachment.length > 0
+                      ? { backgroundImage: `url(${item.attachment})` }
+                      : { backgroundImage: 'url(/img/sample_bg.jpg)' }
+                  }
+                >
+                  <span className="number">{idx + 1}</span>
+                  <p className="title">{item.title}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="floating-menu">
+          <button onClick={() => handleScrollTo('root')}>Top 바로가기</button>
+        </div>
       </div>
 
-      <div className="list_wrap">
-        <ul>
-          {posts.map((item, idx) => (
-            <li key={item.id}>
-              <Link
-                to={
-                  item.isComplete === false
-                    ? `/edit/${item.id}`
-                    : `/view/${item.id}`
-                }
-                className={
-                  item.attachment.length > 0 ? 'l_inner' : 'l_inner blank_type'
-                }
-                style={
-                  item.attachment.length > 0
-                    ? { backgroundImage: `url(${item.attachment})` }
-                    : { backgroundImage: 'url(/img/sample_bg.jpg)' }
-                }
-              >
-                <span className="number">{idx + 1}</span>
-                <p className="title">{item.title}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

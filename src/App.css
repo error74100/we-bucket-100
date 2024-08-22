@@ -6,7 +6,7 @@ body {
 .App {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 20px 20px 0 20px;
 }
 
 /* header */
@@ -35,6 +35,16 @@ body {
   padding: 0 0 0.625rem;
 }
 
+/* footer */
+.footer {
+  font-size: 1rem;
+  text-align: center;
+  color: #fff;
+  padding: 10px 0;
+  margin: 0 -20px 0 -20px;
+  background-color: #621f2f;
+}
+
 /* home */
 .home .progress_wrap {
   display: flex;
@@ -53,6 +63,10 @@ body {
 
 .home .progress_wrap .progress_item > div > div {
   background-color: #c21d54 !important;
+}
+
+.home .list_wrap {
+  padding: 1.25rem 0 3.75rem 0;
 }
 
 .home .list_wrap ul {
@@ -114,6 +128,8 @@ body {
   text-align: center;
   color: #fff;
   padding: 10px;
+  line-height: 1;
+  word-break: keep-all;
 }
 
 /* write */
@@ -328,6 +344,7 @@ body {
 
 .emotion_container .emotion-box {
   width: 20%;
+  font-size: 1.125rem;
   text-align: center;
 }
 
@@ -344,13 +361,13 @@ body {
 
 .emotion_container input[type='radio'] + img {
   border-radius: 5px;
-  padding: 1.25rem;
+  padding: 1.875rem;
 }
 
 .emotion_container input[type='radio']:checked + img,
 .emotion_container input[type='radio'].active + img {
-  border-color: #cd2591;
-  background-color: #cd2591;
+  border-color: #d51f5c;
+  background-color: #d51f5c;
 }
 
 /* view */
@@ -402,8 +419,42 @@ body {
   padding: 20px 0 0 0;
 }
 
+/* 상단 바로가기 */
+.floating-menu {
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+  z-index: 100;
+}
+
+.floating-menu button {
+  background-color: #a2495e;
+  border: none;
+  padding: 0;
+  margin: 0;
+  width: 50px;
+  cursor: pointer;
+  font-size: 0;
+  transition: background-color 0.3s ease;
+  height: 50px;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-image: url(/icon_arrow_top.png);
+  background-size: 16px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.floating-menu button:hover {
+  background-color: #893e50;
+}
+
 @media (max-width: 768px) {
   .home .list_wrap ul li {
     width: calc(50% - 3px);
+  }
+
+  .emotion_container input[type='radio'] + img {
+    padding: 0.625rem;
   }
 }
