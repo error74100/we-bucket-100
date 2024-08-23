@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 
-function Header({ userObj }) {
+function Header({ user }) {
   const nav = useNavigate();
   const auth = getAuth();
 
@@ -28,7 +28,7 @@ function Header({ userObj }) {
           </Link>
         </h1>
 
-        {userObj.email === import.meta.env.VITE_APP_ADMIN_EMAIL ? (
+        {user.email === import.meta.env.VITE_APP_ADMIN_EMAIL ? (
           <button
             onClick={() => {
               nav('/write');

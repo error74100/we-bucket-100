@@ -6,7 +6,7 @@ import Emotion from '../components/Emotion';
 
 function View() {
   const param = useParams();
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
   const [isImg, setisImg] = useState(false);
   const [image, setImage] = useState(null);
   const [emotion, setEmotion] = useState(3);
@@ -25,11 +25,31 @@ function View() {
       let month = ('0' + (day.getMonth() + 1)).slice(-2);
       let days = ('0' + day.getDate()).slice(-2);
       let dateString = year + '-' + month + '-' + days;
+
       // 문서가 존재하는지 확인
       if (docSnap.exists()) {
-        setData({
-          ...docSnap.data(),
-        });
+        const data = docSnap.data();
+
+        setData(data);
+
+        // 각 articles 배열의 title 필드를 참조된 문서의 데이터로 대체
+        // const articlesWithTitleData = await Promise.all(
+        //   data.contents.map(async (item) => {
+        //     console.log(item);
+        //     const titleDocSnap = await getDoc(item.uid); // title 필드가 DocumentReference인 경우
+        //     if (titleDocSnap.exists()) {
+        //       return {
+        //         ...item,
+        //         uid: titleDocSnap.data().nickName, // 참조된 문서의 title 필드 값으로 대체
+        //       };
+        //     } else {
+        //       return item; // 참조된 문서가 없을 경우 원래 값 유지
+        //     }
+        //   })
+        // );
+
+        // setData({ ...data, item: articlesWithTitleData });
+
         setWithDate(dateString);
         // 필드 값이 문자열이고 길이가 1 이상인지 확인
         if (docSnap.data().attachment.length > 1) {
@@ -53,6 +73,13 @@ function View() {
     nav(`/edit/${param.docId}`);
   };
 
+  const onContent = (e) => {
+    // setData({
+    //   ...data,
+    //   contents: e.target.value,
+    // });
+  };
+
   return (
     <>
       {data && (
@@ -67,7 +94,7 @@ function View() {
             </button>
           </div>
 
-          <div className="write_wrap">
+          <div className="img_view_wrap">
             <ul>
               <li>
                 {isImg === true ? (
@@ -103,7 +130,24 @@ function View() {
 
           <div className="view_group">
             <h2 className="h3_type">기록</h2>
-            <p>{data.contents}</p>
+            <div className="comment_box">
+              {data.contents && data.contents.length > 0
+                ? data.contents.map((item, index) => (
+                    <div key={index} className="group">
+                      <span
+                        className="img"
+                        style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
+                      >
+                        profile image
+                      </span>
+                      <div className="cont">
+                        <p className="name">{item.uid}</p>
+                        <p className="comment">{item.comment}</p>
+                      </div>
+                    </div>
+                  ))
+                : ''}
+            </div>
           </div>
         </div>
       )}

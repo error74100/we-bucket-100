@@ -3,7 +3,6 @@ import { db } from '../firebase';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../components/Footer';
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -109,8 +108,6 @@ function Home() {
           <button onClick={() => handleScrollTo('root')}>Top 바로가기</button>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 }

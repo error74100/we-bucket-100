@@ -72,7 +72,7 @@ function Write() {
   };
 
   return (
-    <>
+    <div className="write_wrap">
       <div className="content_nav">
         <Link to="/" className="icon_back">
           뒤로가기
@@ -91,7 +91,7 @@ function Write() {
         </button>
       </div>
 
-      <div className="write_wrap">
+      <div className="img_view_wrap">
         <ul>
           <li>
             <div
@@ -134,7 +134,7 @@ function Write() {
           placeholder="내용..."
         ></textarea>
       </div>
-    </>
+    </div>
   );
 }
 

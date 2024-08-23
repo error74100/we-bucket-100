@@ -1,68 +1,143 @@
-import { useState } from 'react';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { storage } from '../firebase';
+import { useEffect, useState } from 'react';
+import { getAuth } from 'firebase/auth';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 function Mypage({ user }) {
-  const [image, setImage] = useState(null);
-  const [url, setUrl] = useState('');
-  const [progress, setProgress] = useState(0);
+  const [isModify, setIsModify] = useState(false);
+  const [nickname, setNickname] = useState('');
+  const [newNickname, setNewNickname] = useState('');
+  const nav = useNavigate();
+  const auth = getAuth();
 
-  const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0]);
+  useEffect(() => {
+    getUserDocument(user.uid);
+  }, []);
+
+  const getUserDocument = async (uid) => {
+    const docRef = doc(db, 'users', uid);
+
+    try {
+      const docSnap = await getDoc(docRef);
+
+      // 문서가 존재하는지 확인
+      if (docSnap.exists()) {
+        setNickname(docSnap.data().nickName);
+      } else {
+        console.log('No such document!');
+      }
+    } catch (error) {
+      console.error('Error fetching document:', error);
     }
   };
 
-  const handleUpload = () => {
-    if (!image) return;
+  const onNickname = (e) => {
+    setIsModify((prev) => !prev);
+    setNewNickname(nickname);
+  };
 
-    const storageRef = ref(storage, `avatar/${user.uid}/avatar_img.jpg`);
-    const uploadTask = uploadBytesResumable(storageRef, image);
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {
-        // 업로드 진행률 업데이트
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        setProgress(progress);
-      },
-      (error) => {
-        console.error('Upload failed:', error);
-      },
-      () => {
-        // 업로드 완료 후 이미지 URL 가져오기
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setUrl(downloadURL);
-        });
-      }
-    );
+  const onNicknameChange = (e) => {
+    setNewNickname(e.target.value);
+  };
+
+  const onNicknameSave = () => {
+    if (confirm('저장 하시겠습니까?')) {
+      setIsModify((prev) => !prev);
+      setNickname(newNickname);
+
+      updateUserData(user.uid, newNickname);
+    } else {
+      setIsModify((prev) => !prev);
+    }
+  };
+
+  const onNicknameCancle = () => {
+    setIsModify((prev) => !prev);
+  };
+
+  const updateUserData = async (uid, newNickname) => {
+    const postRef = doc(db, 'users', uid);
+
+    try {
+      await updateDoc(postRef, {
+        nickName: newNickname,
+      });
+
+      alert('저장 되었습니다.');
+      nav('/mypage');
+    } catch (error) {
+      console.error('Error saving image URL to Firestore: ', error);
+    }
   };
 
   return (
     <>
       {user && (
-        <>
-          <div>Mypage (작업 중)</div>
+        <div className="mypage_wrap">
+          <h1 className="h2_type tc">Mypage</h1>
 
-          <div>
-            <p>
-              <img src="" alt="" />
-            </p>
-            <progress value={progress} max="100" />
-            <br />
-            <input type="file" accept="image/*" onChange={handleImageChange} />
-            <button onClick={handleUpload}>Upload</button>
-            <br />
-            {url && <img src={url} alt="Uploaded" style={{ width: '300px' }} />}
-          </div>
+          <div className="mypage_inner">
+            <span
+              className="img"
+              style={{ backgroundImage: `url(${user.photoURL})` }}
+            ></span>
 
-          <div>
-            <p>이미지 :</p>
+            <ul>
+              <li>
+                <span className="title">이름</span>
+                <span className="cont">
+                  <span className="inner_group">{user.displayName}</span>
+                </span>
+              </li>
+              <li>
+                <span className="title">닉네임</span>
+
+                {isModify ? (
+                  <span className="cont">
+                    <span className="inner_group">
+                      <input
+                        type="text"
+                        value={newNickname}
+                        onChange={onNicknameChange}
+                      />
+                      <button
+                        className="btn_basic1 xsmall"
+                        onClick={onNicknameCancle}
+                      >
+                        취소
+                      </button>
+                      <button
+                        className="btn_basic2 xsmall"
+                        onClick={onNicknameSave}
+                      >
+                        저장
+                      </button>
+                    </span>
+                  </span>
+                ) : (
+                  <span className="cont">
+                    <span className="inner_group">
+                      {nickname}
+                      <button
+                        className="btn_basic2 xsmall"
+                        onClick={onNickname}
+                      >
+                        닉네임 설정
+                      </button>
+                    </span>
+                  </span>
+                )}
+              </li>
+              <li>
+                <span className="title">이메일</span>
+                <span className="cont">
+                  <span className="inner_group">{user.email}</span>
+                </span>
+              </li>
+            </ul>
           </div>
-          <div>이름 : {user.displayName}</div>
-          <div>mail : {user.email}</div>
-        </>
+        </div>
       )}
     </>
   );

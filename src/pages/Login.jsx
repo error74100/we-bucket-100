@@ -1,14 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-// import { db } from '../firebase';
+import { db } from '../firebase';
 import { useState } from 'react';
 
 function Login() {
   const nav = useNavigate();
   const provider = new GoogleAuthProvider();
-  const [uid, setUid] = useState('');
-  const [photoURL, setPhotoURL] = useState('');
   const auth = getAuth();
 
   const googleLogin = () =>
@@ -18,8 +16,7 @@ function Login() {
         const token = credential.accessToken;
         const user = result.user;
 
-        // 준비중
-        // addUserInfo();
+        addUserInfo(user);
 
         alert('로그인 되었습니다.');
         nav('/');
@@ -37,21 +34,19 @@ function Login() {
       });
 
   // Add a new document with a generated id.
-  // const addUserInfo = async () => {
-  //   const cityRef = doc(db, 'users', 'BJ');
+  const addUserInfo = async (user) => {
+    const usersRef = doc(db, 'users', user.uid);
 
-  //   setUid();
-
-  //   setDoc(
-  //     cityRef,
-  //     {
-  //       uid: 'uid..',
-  //       displayName: 'dis_name',
-  //       profileURL: '',
-  //     },
-  //     { merge: true }
-  //   );
-  // };
+    setDoc(
+      usersRef,
+      {
+        uid: user.uid,
+        displayName: user.displayName,
+        nickName: '',
+      },
+      { merge: true }
+    );
+  };
 
   const onGoogleLogin = () => {
     googleLogin();

@@ -191,7 +191,7 @@ function Edit() {
   return (
     <div>
       {data && (
-        <>
+        <div className="edit_wrap">
           <div className="content_nav">
             <Link to="/" className="icon_back">
               뒤로가기
@@ -210,7 +210,7 @@ function Edit() {
             </button>
           </div>
 
-          <div className="write_wrap">
+          <div className="img_view_wrap">
             <ul>
               <li>
                 {isImg === true ? (
@@ -294,7 +294,7 @@ function Edit() {
           ) : (
             ''
           )}
-        </>
+        </div>
       )}
     </div>
   );
