@@ -293,11 +293,16 @@ body {
 .view_group .react-datepicker-wrapper {
   position: absolute;
   top: 20px;
-  right: 25px;
+  right: 40px;
 }
 
 .view_group .react-datepicker-wrapper input[type='text'] {
+  max-width: 160px;
   text-align: center;
+}
+
+.view_group .react-datepicker-popper {
+  z-index: 20 !important;
 }
 
 /* content nav */
