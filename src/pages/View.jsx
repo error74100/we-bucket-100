@@ -30,7 +30,11 @@ function View() {
       if (docSnap.exists()) {
         const data = docSnap.data();
 
-        setData(data);
+        setData({
+          ...docSnap.data(),
+        });
+
+        // setData(data);
 
         // 각 articles 배열의 title 필드를 참조된 문서의 데이터로 대체
         // const articlesWithTitleData = await Promise.all(
@@ -98,17 +102,11 @@ function View() {
             <ul>
               <li>
                 {isImg === true ? (
-                  <div
-                    className="l_inner"
-                    style={{ backgroundImage: `url(${data.attachment})` }}
-                  >
+                  <div className="l_inner" style={{ backgroundImage: `url(${data.attachment})` }}>
                     <span className="number">{data.seq}</span>
                   </div>
                 ) : (
-                  <div
-                    className="l_inner blank_type"
-                    style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
-                  >
+                  <div className="l_inner blank_type" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}>
                     <span className="number">{data.seq}</span>
                   </div>
                 )}
@@ -130,14 +128,16 @@ function View() {
 
           <div className="view_group">
             <h2 className="h3_type">기록</h2>
+            <p>{data.contents}</p>
+          </div>
+
+          {/* <div className="view_group">
+            <h2 className="h3_type">기록</h2>
             <div className="comment_box">
               {data.contents && data.contents.length > 0
                 ? data.contents.map((item, index) => (
                     <div key={index} className="group">
-                      <span
-                        className="img"
-                        style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
-                      >
+                      <span className="img" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}>
                         profile image
                       </span>
                       <div className="cont">
@@ -148,7 +148,7 @@ function View() {
                   ))
                 : ''}
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </>
