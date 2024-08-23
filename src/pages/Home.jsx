@@ -14,7 +14,6 @@ function Home() {
   useEffect(() => {
     fetchData();
     getPostsCount();
-    //getCompleteRate();
   }, []);
 
   // Firestore에서 데이터 가져오기

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
-
 import { db } from '../firebase';
 import Emotion from '../components/Emotion';
 
@@ -22,20 +21,16 @@ function View() {
       const docSnap = await getDoc(docRef);
       const timestamp = docSnap.data().withDate;
       const day = timestamp.toDate();
-
       let year = day.getFullYear();
       let month = ('0' + (day.getMonth() + 1)).slice(-2);
       let days = ('0' + day.getDate()).slice(-2);
       let dateString = year + '-' + month + '-' + days;
-
       // 문서가 존재하는지 확인
       if (docSnap.exists()) {
         setData({
           ...docSnap.data(),
         });
-
         setWithDate(dateString);
-
         // 필드 값이 문자열이고 길이가 1 이상인지 확인
         if (docSnap.data().attachment.length > 1) {
           setisImg(true);

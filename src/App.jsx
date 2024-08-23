@@ -25,16 +25,13 @@ function App() {
       if (user) {
         const uid = user.uid;
 
-        // setUser(auth.currentUser);
         setUser(user);
         setIsLogin(true);
-
         setUserObj(user);
       } else {
         // User is signed out
         setIsLogin(false);
       }
-
       setInit(true);
     });
   }, []);

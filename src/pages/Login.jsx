@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+// import { db } from '../firebase';
 import { useState } from 'react';
 
 function Login() {
@@ -37,21 +37,21 @@ function Login() {
       });
 
   // Add a new document with a generated id.
-  const addUserInfo = async () => {
-    const cityRef = doc(db, 'users', 'BJ');
+  // const addUserInfo = async () => {
+  //   const cityRef = doc(db, 'users', 'BJ');
 
-    setUid();
+  //   setUid();
 
-    setDoc(
-      cityRef,
-      {
-        uid: 'uid..',
-        displayName: 'dis_name',
-        profileURL: '',
-      },
-      { merge: true }
-    );
-  };
+  //   setDoc(
+  //     cityRef,
+  //     {
+  //       uid: 'uid..',
+  //       displayName: 'dis_name',
+  //       profileURL: '',
+  //     },
+  //     { merge: true }
+  //   );
+  // };
 
   const onGoogleLogin = () => {
     googleLogin();

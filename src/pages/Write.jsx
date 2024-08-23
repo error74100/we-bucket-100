@@ -10,12 +10,9 @@ import { db } from '../firebase';
 function Write() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [progress, setProgress] = useState(0);
-  const [image, setImage] = useState(null);
   const [emotion, setEmotion] = useState(3);
   const [startDate, setStartDate] = useState(new Date());
   const [maxSeq, setMaxSeq] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
@@ -24,10 +21,10 @@ function Write() {
 
   const getPostsCount = async () => {
     let totalDocs;
+
     try {
       const querySnapshot = await getDocs(collection(db, 'posts'));
       totalDocs = querySnapshot.size;
-
       setMaxSeq(totalDocs);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -42,22 +39,8 @@ function Write() {
     setContent(e.target.value);
   };
 
-  // 이미지 파일 선택 시 실행되는 함수
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result); // 이미지 미리보기를 위해 상태로 저장
-      };
-      reader.readAsDataURL(file); // 파일을 base64 URL로 변환
-    }
-  };
-
   const writePostData = async () => {
     const currentTime = new Date();
-
     await setDoc(doc(db, 'posts', `doc-${maxSeq + 1}`), {
       seq: maxSeq + 1,
       title: title,

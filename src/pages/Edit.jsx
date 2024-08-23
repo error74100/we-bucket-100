@@ -33,7 +33,6 @@ function Edit() {
       const docSnap = await getDoc(docRef);
       const timestamp = docSnap.data().withDate;
       const day = timestamp.toDate();
-
       // 문서가 존재하는지 확인
       if (docSnap.exists()) {
         setData({
@@ -41,7 +40,6 @@ function Edit() {
         });
         setTitle(docSnap.data().title);
         setStartDate(day);
-
         // 필드 값이 문자열이고 길이가 1 이상인지 확인
         if (docSnap.data().attachment.length > 1) {
           setisImg(true);
@@ -70,7 +68,6 @@ function Edit() {
           contents: data.contents,
           isComplete: isImg,
         });
-
         if (image === null) {
           alert('저장 되었습니다.');
           nav(`/view/${param.docId}`, { replace: true });
@@ -88,7 +85,6 @@ function Edit() {
           contents: data.contents,
           isComplete: isImg,
         });
-
         if (image === null) {
           alert('저장 되었습니다.');
           nav(`/view/${param.docId}`, { replace: true });
@@ -140,10 +136,8 @@ function Edit() {
 
   const handleUpload = () => {
     if (!image) return;
-
     const storageRef = ref(storage, `posts/${param.docId}/attachment_img.jpg`);
     const uploadTask = uploadBytesResumable(storageRef, image);
-
     uploadTask.on(
       'state_changed',
       (snapshot) => {
@@ -161,15 +155,12 @@ function Edit() {
         try {
           const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
           setUrl(downloadURL); // 상태에 URL 저장
-
           // Firestore의 해당 문서 필드에 이미지 URL 저장
           const docRef = doc(db, 'posts', param.docId); // Firestore에서 업데이트할 문서 참조
-
           await updateDoc(docRef, {
             attachment: downloadURL, // 필드에 이미지 URL 저장
             isComplete: true,
           });
-
           // 추가 작업이 있다면 여기서 호출
           alert('저장 되었습니다.');
           nav(`/view/${param.docId}`, { replace: true });

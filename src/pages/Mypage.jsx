@@ -18,7 +18,6 @@ function Mypage({ user }) {
 
     const storageRef = ref(storage, `avatar/${user.uid}/avatar_img.jpg`);
     const uploadTask = uploadBytesResumable(storageRef, image);
-
     uploadTask.on(
       'state_changed',
       (snapshot) => {
