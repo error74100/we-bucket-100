@@ -397,9 +397,11 @@ body {
 
 .view_group textarea {
   width: 100%;
-  padding: 0.625rem;
+  padding: 0.625rem 95px 0.625rem 0.625rem;
   outline: none;
   resize: none;
+  height: 70px;
+  border: 1px solid #c48090;
 }
 
 .view_group .flex_wrap {
@@ -442,7 +444,28 @@ body {
   font-weight: bold;
 }
 
-.comment_box .cont .comment {
+.comment_write_box {
+  position: relative;
+}
+
+.comment_write_box .comment_write_btn {
+  position: absolute;
+  right: 5px;
+  bottom: 14px;
+  display: inline-block;
+  height: 60px;
+  font-size: 18px;
+  padding: 0 20px;
+  min-width: 88px;
+  line-height: 38px;
+  text-align: center;
+  font-weight: 400;
+  cursor: pointer;
+  background-color: #c48090;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-family: 'Ownglyph_kimkonghae', sans-serif;
 }
 
 /* edit */

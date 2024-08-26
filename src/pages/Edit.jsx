@@ -1,5 +1,5 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ko from 'date-fns/locale/ko';
@@ -22,11 +22,14 @@ function Edit({ user }) {
   const [isImg, setisImg] = useState(false);
   const [url, setUrl] = useState('');
   const [comment, setComment] = useState('');
+  const commentRef = useRef();
+  const [isChange, setIsChange] = useState(false);
   const nav = useNavigate();
 
   useEffect(() => {
     getDocument();
-  }, []);
+    setIsChange(false);
+  }, [isChange]);
 
   const getDocument = async () => {
     const docRef = doc(db, 'posts', param.docId);
@@ -76,7 +79,7 @@ function Edit({ user }) {
           withDate: startDate,
           emotionId: data.emotionId,
           contents: data.contents,
-          comment: arrayUnion(newComment),
+          // comment: arrayUnion(newComment),
           isComplete: isImg,
         });
         if (image === null) {
@@ -94,7 +97,7 @@ function Edit({ user }) {
           withDate: startDate,
           emotionId: data.emotionId,
           contents: data.contents,
-          comment: arrayUnion(newComment),
+          // comment: arrayUnion(newComment),
           isComplete: isImg,
         });
         if (image === null) {
@@ -107,12 +110,43 @@ function Edit({ user }) {
     }
   };
 
+  const saveComment = async () => {
+    const postRef = doc(db, 'posts', param.docId);
+
+    const newComment = {
+      uid: user.uid,
+      content: comment,
+      date: new Date(),
+    };
+
+    try {
+      await updateDoc(postRef, {
+        comment: arrayUnion(newComment),
+      });
+
+      setIsChange(true);
+    } catch (error) {
+      console.error('Error saving image URL to Firestore: ', error);
+    }
+  };
+
   const onTitle = (e) => {
     setTitle(e.target.value);
   };
 
   const onComment = (e) => {
     setComment(e.target.value);
+  };
+
+  const onCommentWrite = (e) => {
+    if (commentRef.current.value.length > 0) {
+      saveComment();
+      setComment('');
+      alert('기록이 등록 되었습니다.');
+    } else {
+      alert('기록을 작성해주세요.');
+      commentRef.current.focus();
+    }
   };
 
   // 이미지 파일 선택 시 실행되는 함수
@@ -291,12 +325,22 @@ function Edit({ user }) {
 
             <Comment user={user} commentData={dataComment} />
 
-            <textarea
-              value={comment}
-              onChange={onComment}
-              rows="5"
-              placeholder="기록..."
-            ></textarea>
+            <div className="comment_write_box">
+              <textarea
+                value={comment}
+                ref={commentRef}
+                onChange={onComment}
+                placeholder="기록..."
+              ></textarea>
+
+              <button
+                type="text"
+                className="comment_write_btn"
+                onClick={onCommentWrite}
+              >
+                등록
+              </button>
+            </div>
           </div>
 
           {progress > 0 ? (
