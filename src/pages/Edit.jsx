@@ -4,21 +4,24 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import ko from 'date-fns/locale/ko';
 import Emotion from '../components/Emotion';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import Comment from '../components/Comment';
 
-function Edit() {
+function Edit({ user }) {
   const param = useParams();
   const [data, setData] = useState({});
   const [title, setTitle] = useState('');
   const [previewImage, setPreviewImage] = useState(null);
   const [image, setImage] = useState(null);
+  const [dataComment, setDataComment] = useState('');
   const [saveImage, setSaveImage] = useState('');
   const [progress, setProgress] = useState(0);
   const [startDate, setStartDate] = useState(null);
   const [isImg, setisImg] = useState(false);
   const [url, setUrl] = useState('');
+  const [comment, setComment] = useState('');
   const nav = useNavigate();
 
   useEffect(() => {
@@ -40,6 +43,7 @@ function Edit() {
         });
         setTitle(docSnap.data().title);
         setStartDate(day);
+        setDataComment(docSnap.data().comment);
         // 필드 값이 문자열이고 길이가 1 이상인지 확인
         if (docSnap.data().attachment.length > 1) {
           setisImg(true);
@@ -57,6 +61,12 @@ function Edit() {
   const updatePostData = async () => {
     const postRef = doc(db, 'posts', param.docId);
 
+    const newComment = {
+      uid: user.uid,
+      content: comment,
+      date: new Date(),
+    };
+
     if (!image) {
       // 변경 이미지 없을 때.
       try {
@@ -66,6 +76,7 @@ function Edit() {
           withDate: startDate,
           emotionId: data.emotionId,
           contents: data.contents,
+          comment: arrayUnion(newComment),
           isComplete: isImg,
         });
         if (image === null) {
@@ -83,6 +94,7 @@ function Edit() {
           withDate: startDate,
           emotionId: data.emotionId,
           contents: data.contents,
+          comment: arrayUnion(newComment),
           isComplete: isImg,
         });
         if (image === null) {
@@ -99,11 +111,8 @@ function Edit() {
     setTitle(e.target.value);
   };
 
-  const onContent = (e) => {
-    setData({
-      ...data,
-      contents: e.target.value,
-    });
+  const onComment = (e) => {
+    setComment(e.target.value);
   };
 
   // 이미지 파일 선택 시 실행되는 함수
@@ -278,12 +287,15 @@ function Edit() {
           </div>
 
           <div className="view_group">
-            <h2 className="h3_type">내용</h2>
+            <h2 className="h3_type">기록</h2>
+
+            <Comment user={user} commentData={dataComment} />
+
             <textarea
-              value={data.contents}
-              onChange={onContent}
+              value={comment}
+              onChange={onComment}
               rows="5"
-              placeholder="내용..."
+              placeholder="기록..."
             ></textarea>
           </div>
 

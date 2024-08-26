@@ -70,7 +70,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/write" element={<Write />} />
                 <Route path="/view/:docId" element={<View />} />
-                <Route path="/edit/:docId" element={<Edit />} />
+                <Route path="/edit/:docId" element={<Edit user={user} />} />
                 <Route path="/mypage" element={<Mypage user={user} />} />
                 <Route path="*" element={<NotFoundPage />} />
               </>

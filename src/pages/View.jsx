@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import Emotion from '../components/Emotion';
+import Comment from '../components/Comment';
 
 function View() {
   const param = useParams();
@@ -77,13 +78,6 @@ function View() {
     nav(`/edit/${param.docId}`);
   };
 
-  const onContent = (e) => {
-    // setData({
-    //   ...data,
-    //   contents: e.target.value,
-    // });
-  };
-
   return (
     <>
       {data && (
@@ -102,11 +96,17 @@ function View() {
             <ul>
               <li>
                 {isImg === true ? (
-                  <div className="l_inner" style={{ backgroundImage: `url(${data.attachment})` }}>
+                  <div
+                    className="l_inner"
+                    style={{ backgroundImage: `url(${data.attachment})` }}
+                  >
                     <span className="number">{data.seq}</span>
                   </div>
                 ) : (
-                  <div className="l_inner blank_type" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}>
+                  <div
+                    className="l_inner blank_type"
+                    style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
+                  >
                     <span className="number">{data.seq}</span>
                   </div>
                 )}
@@ -128,27 +128,9 @@ function View() {
 
           <div className="view_group">
             <h2 className="h3_type">기록</h2>
-            <p>{data.contents}</p>
-          </div>
 
-          {/* <div className="view_group">
-            <h2 className="h3_type">기록</h2>
-            <div className="comment_box">
-              {data.contents && data.contents.length > 0
-                ? data.contents.map((item, index) => (
-                    <div key={index} className="group">
-                      <span className="img" style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}>
-                        profile image
-                      </span>
-                      <div className="cont">
-                        <p className="name">{item.uid}</p>
-                        <p className="comment">{item.comment}</p>
-                      </div>
-                    </div>
-                  ))
-                : ''}
-            </div>
-          </div> */}
+            <Comment commentData={data.comment} />
+          </div>
         </div>
       )}
     </>

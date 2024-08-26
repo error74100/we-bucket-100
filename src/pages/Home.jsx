@@ -1,6 +1,13 @@
 import ProgressBar from '@ramonak/react-progress-bar';
 import { db } from '../firebase';
-import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  orderBy,
+  limit,
+} from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -17,7 +24,7 @@ function Home() {
 
   // Firestore에서 데이터 가져오기
   const fetchData = async () => {
-    const q = query(collection(db, 'posts'), orderBy('seq', 'asc'));
+    const q = query(collection(db, 'posts'), orderBy('seq', 'asc'), limit(3));
     const querySnapshot = await getDocs(q);
     const docsData = querySnapshot.docs.map((doc) => ({
       id: doc.id,

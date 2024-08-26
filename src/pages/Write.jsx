@@ -122,7 +122,7 @@ function Write() {
       </div>
 
       <div className="view_group">
-        <h2 className="h3_type">내용</h2>
+        <h2 className="h3_type">기록</h2>
 
         <textarea
           value={content}
@@ -131,7 +131,7 @@ function Write() {
           name=""
           rows="4"
           cols="50"
-          placeholder="내용..."
+          placeholder="기록..."
         ></textarea>
       </div>
     </div>

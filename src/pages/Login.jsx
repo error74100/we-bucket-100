@@ -42,7 +42,7 @@ function Login() {
       {
         uid: user.uid,
         displayName: user.displayName,
-        nickName: '',
+        photoURL: user.photoURL,
       },
       { merge: true }
     );
