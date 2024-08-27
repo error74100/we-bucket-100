@@ -78,7 +78,6 @@ function Edit({ user }) {
           attachment: data.attachment,
           withDate: startDate,
           emotionId: data.emotionId,
-          contents: data.contents,
           // comment: arrayUnion(newComment),
           isComplete: isImg,
         });
@@ -96,7 +95,6 @@ function Edit({ user }) {
           title: title,
           withDate: startDate,
           emotionId: data.emotionId,
-          contents: data.contents,
           // comment: arrayUnion(newComment),
           isComplete: isImg,
         });
