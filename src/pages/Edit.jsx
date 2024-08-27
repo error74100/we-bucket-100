@@ -324,23 +324,6 @@ function Edit({ user }) {
             <h2 className="h3_type">기록</h2>
 
             <Comment user={user} commentData={dataComment} />
-
-            <div className="comment_write_box">
-              <textarea
-                value={comment}
-                ref={commentRef}
-                onChange={onComment}
-                placeholder="기록..."
-              ></textarea>
-
-              <button
-                type="text"
-                className="comment_write_btn"
-                onClick={onCommentWrite}
-              >
-                등록
-              </button>
-            </div>
           </div>
 
           {progress > 0 ? (

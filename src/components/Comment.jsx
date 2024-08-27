@@ -5,7 +5,7 @@ function Comment({ user, commentData }) {
     <div className="comment_box">
       {commentData && commentData.length > 0
         ? commentData.map((item, index) => (
-            <CommentItem key={index} item={item} />
+            <CommentItem key={index} item={item} user={user} index={index} />
           ))
         : ''}
     </div>

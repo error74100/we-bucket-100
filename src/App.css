@@ -404,6 +404,13 @@ body {
   border: 1px solid #c48090;
 }
 
+.view_group textarea.type2 {
+  padding: 0.625rem;
+  height: 70px;
+  background: #fde2e8;
+  border: 1px solid #c48090;
+}
+
 .view_group .flex_wrap {
   display: flex;
   align-items: center;
@@ -442,6 +449,14 @@ body {
 
 .comment_box .cont .name {
   font-weight: bold;
+}
+
+.comment_box .cont .btn_wrap button {
+  min-width: 40px;
+}
+
+.comment_box .cont .btn_wrap button ~ button {
+  margin: 0 0 0 5px;
 }
 
 .comment_write_box {

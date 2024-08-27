@@ -1,17 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { doc, getDoc } from 'firebase/firestore';
+import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import Emotion from '../components/Emotion';
 import Comment from '../components/Comment';
 
-function View() {
+function View({ user }) {
   const param = useParams();
   const [data, setData] = useState(null);
   const [isImg, setisImg] = useState(false);
-  const [image, setImage] = useState(null);
-  const [emotion, setEmotion] = useState(3);
   const [withDate, setWithDate] = useState(null);
+  const [comment, setComment] = useState('');
+  const commentRef = useRef();
+  const [isChange, setIsChange] = useState(false);
   const nav = useNavigate();
 
   const getDocument = async () => {
@@ -35,26 +36,6 @@ function View() {
           ...docSnap.data(),
         });
 
-        // setData(data);
-
-        // 각 articles 배열의 title 필드를 참조된 문서의 데이터로 대체
-        // const articlesWithTitleData = await Promise.all(
-        //   data.contents.map(async (item) => {
-        //     console.log(item);
-        //     const titleDocSnap = await getDoc(item.uid); // title 필드가 DocumentReference인 경우
-        //     if (titleDocSnap.exists()) {
-        //       return {
-        //         ...item,
-        //         uid: titleDocSnap.data().nickName, // 참조된 문서의 title 필드 값으로 대체
-        //       };
-        //     } else {
-        //       return item; // 참조된 문서가 없을 경우 원래 값 유지
-        //     }
-        //   })
-        // );
-
-        // setData({ ...data, item: articlesWithTitleData });
-
         setWithDate(dateString);
         // 필드 값이 문자열이고 길이가 1 이상인지 확인
         if (docSnap.data().attachment.length > 1) {
@@ -76,6 +57,42 @@ function View() {
 
   const onEdit = () => {
     nav(`/edit/${param.docId}`);
+  };
+
+  const onComment = (e) => {
+    setComment(e.target.value);
+  };
+
+  const onCommentWrite = (e) => {
+    if (commentRef.current.value.length > 0) {
+      saveComment();
+      setComment('');
+      alert('기록이 등록 되었습니다.');
+    } else {
+      alert('기록을 작성해주세요.');
+      commentRef.current.focus();
+    }
+  };
+
+  const saveComment = async () => {
+    const postRef = doc(db, 'posts', param.docId);
+
+    const newComment = {
+      uid: user.uid,
+      content: comment,
+      date: new Date(),
+    };
+
+    try {
+      await updateDoc(postRef, {
+        comment: arrayUnion(newComment),
+      });
+
+      setIsChange(true);
+      location.reload();
+    } catch (error) {
+      console.error('Error saving image URL to Firestore: ', error);
+    }
   };
 
   return (
@@ -129,7 +146,24 @@ function View() {
           <div className="view_group">
             <h2 className="h3_type">기록</h2>
 
-            <Comment commentData={data.comment} />
+            <Comment user={user} commentData={data.comment} />
+
+            <div className="comment_write_box">
+              <textarea
+                value={comment}
+                ref={commentRef}
+                onChange={onComment}
+                placeholder="기록..."
+              ></textarea>
+
+              <button
+                type="text"
+                className="comment_write_btn"
+                onClick={onCommentWrite}
+              >
+                등록
+              </button>
+            </div>
           </div>
         </div>
       )}

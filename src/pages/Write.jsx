@@ -9,7 +9,6 @@ import { db } from '../firebase';
 
 function Write() {
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
   const [emotion, setEmotion] = useState(3);
   const [startDate, setStartDate] = useState(new Date());
   const [maxSeq, setMaxSeq] = useState(0);
@@ -35,10 +34,6 @@ function Write() {
     setTitle(e.target.value);
   };
 
-  const onContent = (e) => {
-    setContent(e.target.value);
-  };
-
   const writePostData = async () => {
     const currentTime = new Date();
     await setDoc(doc(db, 'posts', `doc-${maxSeq + 1}`), {
@@ -47,7 +42,6 @@ function Write() {
       attachment: '',
       withDate: startDate,
       emotionId: emotion,
-      contents: content,
       date: currentTime,
       isComplete: false,
     });
@@ -98,8 +92,7 @@ function Write() {
               className="l_inner blank_type"
               style={{ backgroundImage: 'url(/img/sample_bg.jpg)' }}
             >
-              <span className="number">1</span>
-              <p className="title">구경하기 1</p>
+              <span className="number">{maxSeq + 1}</span>
             </div>
           </li>
         </ul>
@@ -119,20 +112,6 @@ function Write() {
         <h2 className="h3_type">감정 상태</h2>
 
         <Emotion emotionId={emotion} onEmotion={onEmotion} />
-      </div>
-
-      <div className="view_group">
-        <h2 className="h3_type">기록</h2>
-
-        <textarea
-          value={content}
-          onChange={onContent}
-          id=""
-          name=""
-          rows="4"
-          cols="50"
-          placeholder="기록..."
-        ></textarea>
       </div>
     </div>
   );
