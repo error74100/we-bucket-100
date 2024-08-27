@@ -60,6 +60,7 @@ u {
 }
 html body * {
   box-sizing: border-box;
+  word-break: keep-all;
 }
 
 /* heding */
