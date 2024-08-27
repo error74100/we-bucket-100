@@ -1,3 +1,4 @@
 # we-bucket-100
 
-Vite + Firebase 작업 중.
+https://we-bucket-100.vercel.app/
+Vite + Firebase.
