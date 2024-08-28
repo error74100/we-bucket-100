@@ -9,11 +9,25 @@ function Home() {
   const [maxSeq, setMaxSeq] = useState(0);
   const [completeCount, setCompleteCount] = useState(0);
   const [completeRate, setCompleteRate] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     fetchData();
     getPostsCount();
   }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleScroll = () => {
+    const winScroll = document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+
+    setProgress(scrolled);
+  };
 
   // Firestore에서 데이터 가져오기
   const fetchData = async () => {
@@ -65,6 +79,10 @@ function Home() {
   return (
     <>
       <div className="home">
+        <div className="progress_scrollbar">
+          <progress value={progress} max="100" />
+        </div>
+
         <div className="progress_wrap">
           {posts && (
             <span>
@@ -80,16 +98,8 @@ function Home() {
             {posts.map((item, idx) => (
               <li key={item.id}>
                 <Link
-                  to={
-                    item.isComplete === false
-                      ? `/edit/${item.id}`
-                      : `/view/${item.id}`
-                  }
-                  className={
-                    item.attachment.length > 0
-                      ? 'l_inner'
-                      : 'l_inner blank_type'
-                  }
+                  to={item.isComplete === false ? `/edit/${item.id}` : `/view/${item.id}`}
+                  className={item.attachment.length > 0 ? 'l_inner' : 'l_inner blank_type'}
                   style={
                     item.attachment.length > 0
                       ? { backgroundImage: `url(${item.attachment})` }
