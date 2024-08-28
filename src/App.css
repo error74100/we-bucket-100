@@ -10,6 +10,39 @@ body {
 }
 
 /* header */
+.progress_scrollbar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 5px;
+  z-index: 10;
+}
+
+.progress_scrollbar progress {
+  color: #621f2f;
+  margin: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  height: 46px;
+  block-size: inherit;
+  padding: 0;
+  inline-size: inherit;
+  vertical-align: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.progress_scrollbar progress::-webkit-progress-bar {
+  background-color: #f3d5dc;
+}
+
+.progress_scrollbar progress::-webkit-progress-value {
+  background-color: #621f2f;
+}
+
 .header {
   display: flex;
 }
