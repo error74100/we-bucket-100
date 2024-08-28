@@ -63,6 +63,22 @@ html body * {
   word-break: keep-all;
 }
 
+/* ico */
+.ico_com {
+  font-size: 0;
+  line-height: 0;
+}
+.ico_com,
+.ico_coma:after,
+.ico_comb:before {
+  content: '';
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+
 /* heding */
 .h1_type {
   font-size: 32px;
@@ -138,12 +154,12 @@ a[class*='btn_basic'].round {
   background-color: #c21d54;
 }
 .btn_basic3 {
-  color: #c21d54 !important;
-  border: 1px solid #c21d54;
-  background-color: #fff;
+  color: #fff !important;
+  border: 1px solid #1a58b0;
+  background-color: #1f6bd5;
 }
 .btn_basic3:hover {
-  background-color: #fdedf2;
+  background-color: #1a58b0;
 }
 
 /* input */

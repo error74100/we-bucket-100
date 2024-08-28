@@ -611,8 +611,8 @@ body {
   padding: 0 0.625rem;
   min-width: 0.625rem;
   color: #ffffff !important;
-  border: 1px solid #c21d54;
-  background-color: #d51f5c;
+  border: 1px solid #1a58b0;
+  background-color: #1f6bd5;
   text-align: center;
   line-height: 1.5rem;
   font-weight: 400;
@@ -621,7 +621,7 @@ body {
 }
 
 .mypage_wrap .mypage_inner .img_wrap .custom-file-upload:hover {
-  background-color: #c21d54;
+  background-color: #1a58b0;
 }
 
 .mypage_wrap .mypage_inner .img_wrap input[type='file'] {
@@ -629,7 +629,8 @@ body {
 }
 
 .mypage_wrap .mypage_inner .title {
-  width: 35%;
+  width: 20%;
+  text-align: left;
 }
 
 .mypage_wrap .mypage_inner .cont {
@@ -645,13 +646,7 @@ body {
 
 .mypage_wrap .mypage_inner .cont .inner_group {
   display: flex;
-}
-
-.mypage_wrap .mypage_inner .cont .inner_group:before {
-  content: ':';
-  display: inline-block;
-  clear: both;
-  padding: 0 5px 0 0px;
+  justify-content: flex-end;
 }
 
 .mypage_wrap .mypage_inner .cont .inner_group input {
@@ -662,6 +657,42 @@ body {
   height: 34px;
 
   padding: 0 15px;
+}
+
+/* icon */
+.i_modify {
+  width: 12px;
+  height: 12px;
+  margin: -4px 4px 0 0;
+  background-image: url('./assets/img/icon_modify.png');
+}
+
+.i_delete {
+  width: 12px;
+  height: 12px;
+  margin: -4px 4px 0 0;
+  background-image: url('./assets/img/icon_delete.png');
+}
+
+.i_save {
+  width: 12px;
+  height: 12px;
+  margin: -4px 4px 0 0;
+  background-image: url('./assets/img/icon_check.png');
+}
+
+.i_cancle {
+  width: 12px;
+  height: 12px;
+  margin: -4px 4px 0 0;
+  background-image: url('./assets/img/icon_cancle.png');
+}
+
+.i_setting {
+  width: 12px;
+  height: 12px;
+  margin: -4px 4px 0 0;
+  background-image: url('./assets/img/icon_setting.png');
 }
 
 @media (max-width: 768px) {

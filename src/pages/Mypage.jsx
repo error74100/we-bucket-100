@@ -185,16 +185,16 @@ function Mypage({ user }) {
               {isImageModify ? (
                 <p>
                   <button className="btn_basic1 xsmall" onClick={onImageCancle}>
-                    취소
+                    <i className="ico_com i_cancle"></i>취소
                   </button>
-                  <button className="btn_basic2 xsmall" onClick={onImageSave}>
-                    저장
+                  <button className="btn_basic3 xsmall" onClick={onImageSave}>
+                    <i className="ico_com i_save"></i>저장
                   </button>
                 </p>
               ) : (
                 <p>
                   <label htmlFor="file-upload" className="custom-file-upload">
-                    이미지 설정
+                    <i className="ico_com i_setting"></i>이미지 설정
                   </label>
                   {/* 이미지 파일 선택 input */}
                   <input
@@ -229,13 +229,13 @@ function Mypage({ user }) {
                         className="btn_basic1 xsmall"
                         onClick={onNicknameCancle}
                       >
-                        취소
+                        <i className="ico_com i_cancle"></i>취소
                       </button>
                       <button
                         className="btn_basic2 xsmall"
                         onClick={onNicknameSave}
                       >
-                        저장
+                        <i className="ico_com i_save"></i>저장
                       </button>
                     </span>
                   </span>
@@ -247,7 +247,7 @@ function Mypage({ user }) {
                         className="btn_basic2 xsmall"
                         onClick={onNickname}
                       >
-                        닉네임 설정
+                        <i className="ico_com i_setting"></i>닉네임 설정
                       </button>
                     </span>
                   </span>

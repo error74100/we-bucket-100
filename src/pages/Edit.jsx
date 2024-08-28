@@ -247,7 +247,7 @@ function Edit({ user }) {
             </span>
 
             <button onClick={onSave} className="btn_basic2">
-              저장
+              <i className="ico_com i_save"></i>저장
             </button>
           </div>
 

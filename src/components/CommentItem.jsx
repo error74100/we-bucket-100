@@ -124,8 +124,6 @@ function CommentItem({ item, user, index }) {
               {data.nickName ? data.nickName : data.displayName}
             </p>
 
-            <p className="comment">{item.content}</p>
-
             {editMode === true ? (
               <p className="comment">
                 <textarea
@@ -137,34 +135,34 @@ function CommentItem({ item, user, index }) {
                 ></textarea>
               </p>
             ) : (
-              ''
+              <p className="comment">{item.content}</p>
             )}
 
             {user.uid === data.uid ? (
               <p className="btn_wrap">
                 {editMode === false ? (
-                  <button className="btn_basic1 xsmall" onClick={onCommentEdit}>
-                    수정
+                  <button className="btn_basic3 xsmall" onClick={onCommentEdit}>
+                    <i className="ico_com i_modify"></i>수정
                   </button>
                 ) : (
                   <>
                     <button
-                      className="btn_basic1 xsmall"
+                      className="btn_basic3 xsmall"
                       onClick={onCommentSave}
                     >
-                      저장
+                      <i className="ico_com i_save"></i>저장
                     </button>
                     <button
-                      className="btn_basic3 xsmall"
+                      className="btn_basic1 xsmall"
                       onClick={onCommentCancle}
                     >
-                      취소
+                      <i className="ico_com i_cancle"></i>취소
                     </button>
                   </>
                 )}
 
                 <button className="btn_basic2 xsmall" onClick={onCommentDelete}>
-                  삭제
+                  <i className="ico_com i_delete"></i>삭제
                 </button>
               </p>
             ) : (

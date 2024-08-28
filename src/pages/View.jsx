@@ -105,7 +105,7 @@ function View({ user }) {
             </Link>
             <span className="title">{data.title}</span>
             <button onClick={onEdit} className="btn_basic3">
-              수정
+              <i className="ico_com i_modify"></i>수정
             </button>
           </div>
 

@@ -16,7 +16,9 @@ function Login() {
         const token = credential.accessToken;
         const user = result.user;
 
-        addUserInfo(user);
+        if (!user.emailVerified) {
+          addUserInfo(user);
+        }
 
         alert('로그인 되었습니다.');
         nav('/');
