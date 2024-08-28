@@ -114,7 +114,7 @@ function CommentItem({ item, user, index }) {
             style={
               data.photoURL.length > 0
                 ? { backgroundImage: `url(${data.photoURL})` }
-                : { backgroundImage: 'url(/img/sample_bg.jpg)' }
+                : { backgroundImage: `url(${user.photoURL})` }
             }
           >
             profile image

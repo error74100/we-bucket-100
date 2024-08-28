@@ -129,6 +129,7 @@ body {
   color: #fff;
   padding: 10px;
   line-height: 1;
+  background-color: rgba(0, 0, 0, 0.3);
   word-break: keep-all;
 }
 
@@ -149,7 +150,7 @@ body {
 
 .img_view_wrap .l_inner {
   position: relative;
-  padding-top: 60%;
+  padding-top: 80%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -237,7 +238,7 @@ body {
   left: 0;
   top: 0;
   right: 0;
-  padding-top: 60%;
+  padding-top: 80%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -575,17 +576,56 @@ body {
   padding: 5px 0;
 }
 
+.mypage_wrap .mypage_inner .img_wrap {
+  padding: 0 0 27px;
+  margin: 0 0 15px;
+  border-bottom: 1px dotted #c48090;
+}
+
 .mypage_wrap .mypage_inner .img {
   display: inline-block;
   width: 100px;
   height: 100px;
-  margin: 20px 0;
+  font-size: 0;
+  margin: 20px 0 0 0;
   border-radius: 50%;
   overflow: hidden;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-color: #ddd;
+}
+
+.mypage_wrap .mypage_inner .img_wrap p * {
+  vertical-align: middle;
+}
+
+.mypage_wrap .mypage_inner .img_wrap p button ~ button {
+  margin: 0 0 0 5px;
+}
+
+.mypage_wrap .mypage_inner .img_wrap .custom-file-upload {
+  display: inline-block;
+  height: 1.625rem;
+  font-size: 0.8125rem;
+  padding: 0 0.625rem;
+  min-width: 0.625rem;
+  color: #ffffff !important;
+  border: 1px solid #c21d54;
+  background-color: #d51f5c;
+  text-align: center;
+  line-height: 1.5rem;
+  font-weight: 400;
+  cursor: pointer;
+  font-family: 'Ownglyph_kimkonghae', sans-serif;
+}
+
+.mypage_wrap .mypage_inner .img_wrap .custom-file-upload:hover {
+  background-color: #c21d54;
+}
+
+.mypage_wrap .mypage_inner .img_wrap input[type='file'] {
+  display: none;
 }
 
 .mypage_wrap .mypage_inner .title {
@@ -631,18 +671,5 @@ body {
 
   .emotion_container input[type='radio'] + img {
     padding: 0.625rem;
-  }
-
-  /* write */
-  .write_wrap .l_inner {
-    padding-top: 80%;
-  }
-
-  .img_view_wrap .l_inner {
-    padding-top: 80%;
-  }
-
-  .upload_wrap {
-    padding-top: 80%;
   }
 }
