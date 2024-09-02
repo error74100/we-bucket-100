@@ -10,6 +10,7 @@ function Home() {
   const [completeCount, setCompleteCount] = useState(0);
   const [completeRate, setCompleteRate] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     fetchData();
@@ -23,7 +24,9 @@ function Home() {
 
   const handleScroll = () => {
     const winScroll = document.documentElement.scrollTop;
-    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const height =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
     const scrolled = (winScroll / height) * 100;
 
     setProgress(scrolled);
@@ -76,6 +79,15 @@ function Home() {
     }
   };
 
+  // 검색어에 따라 posts 필터링
+  const filteredPosts = posts.filter((post) =>
+    post.title.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const onSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <>
       <div className="home">
@@ -93,26 +105,49 @@ function Home() {
           <ProgressBar completed={completeRate} className="progress_item" />
         </div>
 
-        <div className="list_wrap">
-          <ul>
-            {posts.map((item, idx) => (
-              <li key={item.id}>
-                <Link
-                  to={item.isComplete === false ? `/edit/${item.id}` : `/view/${item.id}`}
-                  className={item.attachment.length > 0 ? 'l_inner' : 'l_inner blank_type'}
-                  style={
-                    item.attachment.length > 0
-                      ? { backgroundImage: `url(${item.attachment})` }
-                      : { backgroundImage: 'url(/img/sample_bg.jpg)' }
-                  }
-                >
-                  <span className="number">{idx + 1}</span>
-                  <p className="title">{item.title}</p>
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <div className="search_wrap">
+          <input
+            type="text"
+            value={search}
+            onChange={onSearch}
+            placeholder="검색어를 입력하세요."
+          />
         </div>
+
+        {filteredPosts.length > 0 ? (
+          <div className="list_wrap">
+            <ul>
+              {filteredPosts.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    to={
+                      item.isComplete === false
+                        ? `/edit/${item.id}`
+                        : `/view/${item.id}`
+                    }
+                    className={
+                      item.attachment.length > 0
+                        ? 'l_inner'
+                        : 'l_inner blank_type'
+                    }
+                    style={
+                      item.attachment.length > 0
+                        ? { backgroundImage: `url(${item.attachment})` }
+                        : { backgroundImage: 'url(/img/sample_bg.jpg)' }
+                    }
+                  >
+                    <span className="number">{item.seq}</span>
+                    <p className="title">{item.title}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="list_wrap no_result_type">
+            <p>검색 결과가 없습니다.</p>
+          </div>
+        )}
 
         <div className="floating-menu">
           <button onClick={() => handleScrollTo('root')}>Top 바로가기</button>

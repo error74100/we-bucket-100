@@ -102,6 +102,16 @@ body {
   padding: 1.25rem 0 3.75rem 0;
 }
 
+.home .list_wrap.no_result_type {
+  text-align: center;
+}
+
+.home .list_wrap.no_result_type p {
+  padding: 4.375rem 0;
+  border-radius: 5px;
+  border: 1px solid #c48090;
+}
+
 .home .list_wrap ul {
   display: flex;
   flex-wrap: wrap;
