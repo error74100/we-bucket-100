@@ -7,6 +7,8 @@ import Login from './pages/Login';
 import Write from './pages/Write';
 import Header from './components/Header';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
+import { db } from './firebase';
 import Mypage from './pages/Mypage';
 import View from './pages/View';
 import Edit from './pages/Edit';
@@ -22,11 +24,38 @@ function App() {
   const auth = getAuth();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, async (user) => {
       if (user) {
         const uid = user.uid;
 
-        startLogoutTimer();
+        // 사용자가 로그인했을 때, 로그인 시간을 Firestore에 저장
+        const userRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(userRef);
+
+        await setDoc(
+          userRef,
+          {
+            loginTime: serverTimestamp(), // 서버 시간을 기록
+          },
+          { merge: true }
+        );
+
+        if (docSnap.exists()) {
+          const loginTime = docSnap.data().loginTime.toDate(); // Firestore 타임스탬프를 Date 객체로 변환
+          const currentTime = new Date();
+          const timeDiff = currentTime - loginTime;
+
+          const hoursPassed = timeDiff / (1000 * 60 * 60); // 시간으로 변환
+
+          if (hoursPassed >= 24) {
+            // 24시간이 지났다면 로그아웃
+            await signOut(auth);
+
+            alert('자동 로그아웃 되었습니다.');
+            nav('/');
+            location.reload();
+          }
+        }
 
         setUser(user);
         setIsLogin(true);
@@ -37,21 +66,6 @@ function App() {
       setInit(true);
     });
   }, []);
-
-  // 로그인 시 타이머 설정
-  const startLogoutTimer = () => {
-    // 24시간 후에 로그아웃
-    setTimeout(() => {
-      signOut(auth)
-        .then(() => {
-          alert('자동 로그아웃 되었습니다.');
-          nav('/');
-        })
-        .catch((error) => {
-          console.error('로그아웃 중 에러 발생:', error);
-        });
-    }, 24 * 3600 * 1000); // 24시간 = 24 * 3600초 * 1000밀리초
-  };
 
   return (
     <div className="App">
