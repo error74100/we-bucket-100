@@ -485,6 +485,11 @@ body {
   font-weight: bold;
 }
 
+.comment_box .cont .date {
+  font-size: 0.9375rem;
+  color: #666;
+}
+
 .comment_box .cont .btn_wrap button {
   min-width: 40px;
 }

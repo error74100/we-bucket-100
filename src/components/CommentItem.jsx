@@ -8,6 +8,7 @@ function CommentItem({ item, user, index }) {
   const [editMode, setEditMode] = useState(false);
   const [comment, setComment] = useState('');
   const [newComment, setNewComment] = useState('');
+  const [date, setDate] = useState(null);
   const commentRef = useRef();
   const param = useParams();
   const nav = useNavigate();
@@ -20,10 +21,23 @@ function CommentItem({ item, user, index }) {
     const docRef = doc(db, 'users', item.uid);
     const docSnap = await getDoc(docRef);
 
+    const timestamp = item.date;
+    const day = timestamp.toDate();
+    let year = day.getFullYear();
+    let month = ('0' + (day.getMonth() + 1)).slice(-2);
+    let days = ('0' + day.getDate()).slice(-2);
+
+    let hour = ('0' + day.getHours()).slice(-2);
+    let minute = ('0' + day.getMinutes()).slice(-2);
+    let dateString =
+      year + '.' + month + '.' + days + '. ' + hour + ':' + minute;
+
     if (docSnap.exists()) {
       setData({
         ...docSnap.data(),
       });
+
+      setDate(dateString);
     } else {
       console.log('No such document!');
     }
@@ -135,7 +149,10 @@ function CommentItem({ item, user, index }) {
                 ></textarea>
               </p>
             ) : (
-              <p className="comment">{item.content}</p>
+              <>
+                <p className="comment">{item.content}</p>
+                <p className="date">{date}</p>
+              </>
             )}
 
             {user.uid === data.uid ? (
