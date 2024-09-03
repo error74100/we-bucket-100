@@ -2,7 +2,7 @@ import ProgressBar from '@ramonak/react-progress-bar';
 import { db } from '../firebase';
 import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -11,6 +11,7 @@ function Home() {
   const [completeRate, setCompleteRate] = useState(0);
   const [progress, setProgress] = useState(0);
   const [search, setSearch] = useState('');
+  const nav = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -148,6 +149,10 @@ function Home() {
             <p>검색 결과가 없습니다.</p>
           </div>
         )}
+
+        <div className="floating-menu type2">
+          <button onClick={() => nav('/theday')}>The day</button>
+        </div>
 
         <div className="floating-menu">
           <button onClick={() => handleScrollTo('root')}>Top 바로가기</button>

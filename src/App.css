@@ -45,6 +45,8 @@ body {
 
 .header {
   display: flex;
+  position: relative;
+  z-index: 1;
 }
 
 .header h1 {
@@ -595,6 +597,20 @@ body {
   background-color: #893e50;
 }
 
+.floating-menu.type2 {
+  bottom: 70px;
+}
+
+.floating-menu.type2 button {
+  background-color: #2668a3;
+  background-image: url(./assets/img/icon_calendar.png);
+  background-size: 26px;
+}
+
+.floating-menu.type2 button:hover {
+  background-color: #225c90;
+}
+
 /* mypage */
 .mypage_wrap {
   padding: 0 0 50px 0;
@@ -707,6 +723,108 @@ body {
   padding: 0 15px;
 }
 
+/* the day */
+.theday_wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 50%;
+  background-image: url(/img/sample_bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  overflow: hidden;
+}
+
+.theday_gap {
+  padding: 0 0 50px 0;
+  min-height: calc(100vh - 113px);
+}
+
+.theday_wrap .inner {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100%;
+  color: #fff;
+}
+
+.theday_wrap .txt01 {
+  position: absolute;
+  left: 20px;
+  top: 90px;
+  line-height: 1.2;
+}
+
+.theday_wrap .txt01 b {
+  display: block;
+}
+
+.theday_wrap .txt02 {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.theday_wrap .upload_btn_wrap {
+  display: inline-block;
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  border: 1px solid red;
+}
+
+.theday_wrap .upload_btn_wrap input[type='file'] {
+  display: none;
+}
+
+.theday_cont_wrap {
+  position: absolute;
+  left: 0;
+  top: calc(50% - 10px);
+  right: 0;
+  bottom: 44px;
+  max-width: 1000px;
+  background: #fff;
+  margin: 0 auto;
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+}
+
+.theday_cont_wrap .inner {
+  position: relative;
+  max-width: 1000px;
+  height: calc(100% - 20px);
+  margin: 20px auto;
+  padding: 0 20px 10px 20px;
+  overflow-y: auto;
+}
+
+.theday_cont_wrap .group {
+  padding: 10px 0;
+  line-height: 1.2;
+}
+
+.theday_cont_wrap .group ~ .group {
+  border-top: 1px solid #ddd;
+}
+
+.theday_cont_wrap .group p {
+  font-size: 18px;
+}
+
+.theday_cont_wrap .group .tit {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.theday_cont_wrap .group .tit.point_type {
+  color: #1f6bd5;
+}
+
 /* icon */
 .i_modify {
   width: 12px;
@@ -741,6 +859,61 @@ body {
   height: 12px;
   margin: -4px 4px 0 0;
   background-image: url('./assets/img/icon_setting.png');
+}
+
+@keyframes fly-up {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(-15vh) translateX(-8vw) scale(1.1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(-30vh) translateX(8vw) scale(1.2);
+    opacity: 0.7;
+  }
+  75% {
+    transform: translateY(-45vh) translateX(-8vw) scale(1.3);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-60vh) scale(1.4);
+    opacity: 0;
+  }
+}
+
+.heart {
+  width: 30px;
+  height: 30px;
+  background-image: url('./assets/img/icon_heart.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  animation: fly-up 8s ease-in-out infinite;
+  position: absolute;
+  bottom: -30px;
+}
+
+.heart.type1 {
+  width: 20px;
+  height: 20px;
+  left: 10%;
+  transform: translateX(-10%);
+}
+
+.heart.type2 {
+  left: 40%;
+  transform: translateX(-40%);
+  animation-delay: 2.4s;
+}
+
+.heart.type3 {
+  width: 26px;
+  height: 26px;
+  left: 80%;
+  transform: translateX(-80%);
+  animation-delay: 1.2s;
 }
 
 @media (max-width: 768px) {
