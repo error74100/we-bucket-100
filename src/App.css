@@ -960,7 +960,7 @@ body {
   height: 26px;
   left: 20%;
   transform: translateX(-80%);
-  animation-delay: 1.8s;
+  animation-delay: 4s;
 }
 
 .heart.type5 {
