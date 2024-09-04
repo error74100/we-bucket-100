@@ -195,6 +195,8 @@ function TheDay() {
         <div className="heart type1"></div>
         <div className="heart type2"></div>
         <div className="heart type3"></div>
+        <div className="heart type4"></div>
+        <div className="heart type5"></div>
       </div>
 
       <div className="theday_cont_wrap">

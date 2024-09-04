@@ -813,11 +813,12 @@ body {
 }
 
 .theday_cont_wrap {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: calc(50% - 10px);
   right: 0;
-  bottom: 44px;
+  /* bottom: 144px; */
+  bottom: 0;
   max-width: 1000px;
   background: #fff;
   margin: 0 auto;
@@ -952,6 +953,22 @@ body {
   left: 80%;
   transform: translateX(-80%);
   animation-delay: 1.2s;
+}
+
+.heart.type4 {
+  width: 26px;
+  height: 26px;
+  left: 20%;
+  transform: translateX(-80%);
+  animation-delay: 1.8s;
+}
+
+.heart.type5 {
+  width: 26px;
+  height: 26px;
+  left: 60%;
+  transform: translateX(-80%);
+  animation-delay: 3.2s;
 }
 
 @media (max-width: 768px) {
