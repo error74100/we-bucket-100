@@ -730,10 +730,6 @@ body {
   top: 0;
   right: 0;
   bottom: 50%;
-  background-image: url(/img/sample_bg.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
   overflow: hidden;
 }
 
@@ -748,6 +744,21 @@ body {
   margin: 0 auto;
   height: 100%;
   color: #fff;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 0;
+}
+
+.theday_wrap .preview_wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .theday_wrap .txt01 {
@@ -755,6 +766,8 @@ body {
   left: 20px;
   top: 90px;
   line-height: 1.2;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  z-index: 5;
 }
 
 .theday_wrap .txt01 b {
@@ -767,6 +780,8 @@ body {
   bottom: 20px;
   font-size: 40px;
   font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  z-index: 5;
 }
 
 .theday_wrap .upload_btn_wrap {
@@ -774,7 +789,23 @@ body {
   position: absolute;
   left: 20px;
   bottom: 20px;
-  border: 1px solid red;
+  z-index: 5;
+}
+
+.theday_wrap .upload_btn_wrap label {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  font-size: 0;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.7);
+  vertical-align: middle;
+}
+
+.theday_wrap .upload_btn_wrap button {
+  margin: 0 0 0 5px;
+  vertical-align: middle;
 }
 
 .theday_wrap .upload_btn_wrap input[type='file'] {
@@ -859,6 +890,13 @@ body {
   height: 12px;
   margin: -4px 4px 0 0;
   background-image: url('./assets/img/icon_setting.png');
+}
+
+.i_image_upload {
+  width: 16px;
+  height: 16px;
+  margin: 4px 0px 0 5px;
+  background-image: url('./assets/img/icon_image_upload.png');
 }
 
 @keyframes fly-up {

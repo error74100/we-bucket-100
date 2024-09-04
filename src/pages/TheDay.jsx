@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { calculateDate } from '../utill/calculateDate';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -13,6 +13,7 @@ function TheDay() {
   const [image, setImage] = useState(null);
   const [newImage, setNewImage] = useState(null);
   const [photoUrl, setPhotoUrl] = useState('');
+  const uploadRef = useRef(null);
 
   useEffect(() => {
     getThedaysDocument();
@@ -40,8 +41,6 @@ function TheDay() {
       // 문서가 존재하는지 확인
       if (docSnap.exists()) {
         setPhotoUrl(docSnap.data().photoURL);
-
-        console.log(docSnap.data().photoURL);
       } else {
         console.log('No such document!');
       }
@@ -72,6 +71,15 @@ function TheDay() {
     }
   };
 
+  const onImageCancle = () => {
+    setIsImageModify((prev) => !prev);
+    setNewImage(null);
+
+    if (uploadRef.current) {
+      uploadRef.current.value = '';
+    }
+  };
+
   const onImageSave = () => {
     if (confirm('저장 하시겠습니까?')) {
       setIsImageModify((prev) => !prev);
@@ -80,6 +88,10 @@ function TheDay() {
     } else {
       setIsImageModify((prev) => !prev);
       setNewImage(null);
+
+      if (uploadRef.current) {
+        uploadRef.current.value = '';
+      }
     }
   };
 
@@ -124,37 +136,57 @@ function TheDay() {
 
   return (
     <>
-      <div
-        className="theday_wrap"
-        style={{ backgroundImage: 'url(/icon_arrow_top.png)' }}
-      >
-        <div className="inner">
+      <div className="theday_wrap">
+        <div
+          className="inner"
+          style={
+            photoUrl.length > 0
+              ? { backgroundImage: `url(${photoUrl})` }
+              : { backgroundImage: '' }
+          }
+        >
           <p className="txt01">
             <b>Since</b>
 
             {calculateDate(startDate, 1)}
           </p>
 
-          {newImage === null ? <span>111</span> : <span>222 / {newImage}</span>}
-
           {daysPassed > 0 && <p className="txt02">{daysPassed}일</p>}
           <span className="upload_btn_wrap">
             <label htmlFor="file-upload" className="custom-file-upload">
-              <i className="ico_com i_setting"></i>이미지 설정
+              <i className="ico_com i_image_upload"></i>이미지 설정
             </label>
             {/* 이미지 파일 선택 input */}
             <input
               type="file"
               accept="image/*"
               id="file-upload"
+              ref={uploadRef}
               onChange={handleImageChange}
             />
 
-            <button className="btn_basic3 xsmall" onClick={onImageSave}>
-              <i className="ico_com i_save"></i>저장
-            </button>
+            {isImageModify ? (
+              <>
+                <button className="btn_basic1 xsmall" onClick={onImageCancle}>
+                  <i className="ico_com i_cancle"></i>취소
+                </button>
+
+                <button className="btn_basic3 xsmall" onClick={onImageSave}>
+                  <i className="ico_com i_save"></i>저장
+                </button>
+              </>
+            ) : (
+              ''
+            )}
           </span>
+
+          <div
+            className="preview_wrap"
+            style={newImage && { backgroundImage: `url(${newImage})` }}
+          ></div>
         </div>
+
+        {newImage === null ? <span>111</span> : <span>222 / {newImage}</span>}
 
         {/* <div className="heart type1"></div>
         <div className="heart type2"></div>
