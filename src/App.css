@@ -931,7 +931,7 @@ body {
   background-repeat: no-repeat;
   animation: fly-up 8s ease-in-out infinite;
   position: absolute;
-  bottom: -60px;
+  bottom: -90px;
 }
 
 .heart.type1 {
