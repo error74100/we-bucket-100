@@ -777,7 +777,7 @@ body {
 .theday_wrap .txt02 {
   position: absolute;
   right: 20px;
-  bottom: 20px;
+  bottom: 40px;
   font-size: 40px;
   font-weight: bold;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
@@ -788,7 +788,7 @@ body {
   display: inline-block;
   position: absolute;
   left: 20px;
-  bottom: 20px;
+  bottom: 40px;
   z-index: 5;
 }
 
@@ -815,7 +815,7 @@ body {
 .theday_cont_wrap {
   position: fixed;
   left: 0;
-  top: calc(50% - 10px);
+  top: calc(50% - 30px);
   right: 0;
   /* bottom: 144px; */
   bottom: 0;
