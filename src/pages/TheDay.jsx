@@ -14,6 +14,7 @@ function TheDay() {
   const [newImage, setNewImage] = useState(null);
   const [photoUrl, setPhotoUrl] = useState('');
   const uploadRef = useRef(null);
+  const todayRef = useRef(null);
 
   useEffect(() => {
     getThedaysDocument();
@@ -30,6 +31,11 @@ function TheDay() {
     };
 
     calculateDaysPassed();
+
+    // 페이지 로드 후 '오늘' 영역으로 스크롤 이동.
+    if (todayRef.current) {
+      todayRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }, []);
 
   const getThedaysDocument = async () => {
@@ -186,11 +192,9 @@ function TheDay() {
           ></div>
         </div>
 
-        {newImage === null ? <span>111</span> : <span>222 / {newImage}</span>}
-
-        {/* <div className="heart type1"></div>
+        <div className="heart type1"></div>
         <div className="heart type2"></div>
-        <div className="heart type3"></div> */}
+        <div className="heart type3"></div>
       </div>
 
       <div className="theday_cont_wrap">
@@ -204,7 +208,9 @@ function TheDay() {
             <p>{calculateDate(startDate, 200)}</p>
           </div>
           <div className="group">
-            <p className="tit point_type">오늘</p>
+            <p className="tit point_type" ref={todayRef}>
+              오늘
+            </p>
             <p>{calculateDate(new Date(), 0)}</p>
           </div>
           <div className="group">
