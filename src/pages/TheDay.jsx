@@ -38,6 +38,24 @@ function TheDay() {
     }
   }, []);
 
+  useEffect(() => {
+    const updateHeight = () => {
+      document.documentElement.style.setProperty(
+        '--vh',
+        `${window.innerHeight * 0.01}px`
+      );
+
+      console.log(updateHeight);
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
+
   const getThedaysDocument = async () => {
     const docRef = doc(db, 'thedays', 'img');
 

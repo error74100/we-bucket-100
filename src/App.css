@@ -729,13 +729,12 @@ body {
   left: 0;
   top: 0;
   right: 0;
-  bottom: 50%;
-  /* overflow: hidden; */
+  height: calc(var(--vh, 1vh) * 50);
+  overflow: hidden;
 }
 
 .theday_gap {
-  padding: 0 0 50px 0;
-  min-height: calc(100vh - 113px);
+  min-height: calc(var(--vh, 1vh) * 100 - 113px);
 }
 
 .theday_wrap .inner {
@@ -777,7 +776,7 @@ body {
 .theday_wrap .txt02 {
   position: absolute;
   right: 20px;
-  bottom: 40px;
+  bottom: 20px;
   font-size: 40px;
   font-weight: bold;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
@@ -788,7 +787,7 @@ body {
   display: inline-block;
   position: absolute;
   left: 20px;
-  bottom: 40px;
+  bottom: 20px;
   z-index: 5;
 }
 
@@ -813,12 +812,12 @@ body {
 }
 
 .theday_cont_wrap {
-  position: fixed;
+  position: absolute;
   left: 0;
-  top: calc(50% - 30px);
+  top: calc(var(--vh, 1vh) * 50 - 10px);
   right: 0;
   /* bottom: 144px; */
-  bottom: 0;
+  height: calc(var(--vh, 1vh) * 50);
   max-width: 1000px;
   background: #fff;
   margin: 0 auto;
@@ -969,6 +968,23 @@ body {
   left: 60%;
   transform: translateX(-80%);
   animation-delay: 3.2s;
+}
+
+/* test */
+.test_wrap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.test_wrap .top_wrap {
+  height: calc(var(--vh, 1vh) * 50); /* 100vh 대신 사용 */
+}
+
+.test_wrap .bottom_wrap {
+  height: calc(var(--vh, 1vh) * 50);
 }
 
 @media (max-width: 768px) {
