@@ -611,6 +611,20 @@ body {
   background-color: #225c90;
 }
 
+.floating-menu.type3 {
+  bottom: 125px;
+}
+
+.floating-menu.type3 button {
+  background-color: #26a35f;
+  background-image: url(./assets/img/icon_card.png);
+  background-size: 28px;
+}
+
+.floating-menu.type3 button:hover {
+  background-color: #218f53;
+}
+
 /* mypage */
 .mypage_wrap {
   padding: 0 0 50px 0;

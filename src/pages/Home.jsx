@@ -150,6 +150,10 @@ function Home() {
           </div>
         )}
 
+        <div className="floating-menu type3">
+          <button onClick={() => nav('/cardgame')}>Card Game</button>
+        </div>
+
         <div className="floating-menu type2">
           <button onClick={() => nav('/theday')}>The day</button>
         </div>

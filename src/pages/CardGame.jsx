@@ -106,7 +106,7 @@ function CardGame() {
     setTimeout(() => {
       closeCard(index);
       setIsCheck(false);
-    }, 1000);
+    }, 800);
   }
 
   function cardCheck(one, two) {
