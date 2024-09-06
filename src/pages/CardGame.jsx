@@ -58,7 +58,7 @@ function CardGame() {
     const cardBack = document.querySelector('.card_wrap .inner');
     const cardFront = document.querySelector('.card_wrap .inner');
 
-    if (isCheck) {
+    if (isCheck || item.complete) {
       return;
     }
 
