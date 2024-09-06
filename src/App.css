@@ -970,6 +970,58 @@ body {
   animation-delay: 3.2s;
 }
 
+/* card game */
+.card_wrap {
+  display: flex;
+  align-items: center;
+  min-height: calc(100vh - 113px);
+}
+
+.card_wrap .inner {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  padding: 20px 0;
+  gap: 10px;
+}
+
+.card_wrap .card {
+  position: relative;
+  width: calc(25% - 8px);
+  height: 180px;
+}
+
+.card_wrap .card .card__back,
+.card_wrap .card .card__front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-clip: content-box;
+  background-color: #2c949b;
+  background-repeat: no-repeat;
+  background-position: center center;
+  backface-visibility: hidden;
+  transition: transform 500ms;
+}
+
+.card_wrap .card .card__back {
+  transform: rotateY(0deg);
+  background-image: url(/img/card_back_img.png);
+  background-size: 40% auto;
+}
+
+.card_wrap .card .card__front {
+  transform: rotateY(-180deg);
+  background-color: #ddd;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
 /* test */
 .test_wrap {
   position: absolute;
@@ -994,5 +1046,11 @@ body {
 
   .emotion_container input[type='radio'] + img {
     padding: 0.625rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .card_wrap .card {
+    height: 120px;
   }
 }

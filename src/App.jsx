@@ -16,6 +16,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import LoginCheck from './pages/LoginCheck';
 import Footer from './components/Footer';
 import TheDay from './pages/TheDay';
+import CardGame from './pages/CardGame';
 
 function App() {
   const [init, setInit] = useState(false);
@@ -88,6 +89,7 @@ function App() {
                 <Route path="/edit/:docId" element={<Edit user={user} />} />
                 <Route path="/mypage" element={<Mypage user={user} />} />
                 <Route path="/theday" element={<TheDay />} />
+                <Route path="/cardgame" element={<CardGame />} />
                 <Route path="*" element={<NotFoundPage />} />
               </>
             )}
