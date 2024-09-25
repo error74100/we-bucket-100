@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 const BORAD_SIZE = 16; // 게임판 사이즈
 
 function CardGame() {
+  const [init, setInit] = useState(false);
+  const [ready, setReady] = useState(false);
   const [card, setCard] = useState([]);
   const [reset, setReset] = useState(false);
   const [isCheck, setIsCheck] = useState(false);
@@ -12,13 +14,16 @@ function CardGame() {
 
   useEffect(() => {
     generateNumbers();
-  }, [reset]);
+    initCard();
+  }, [init, reset]);
 
   const generateNumbers = () => {
     // 0부터 30까지 중복되지 않는 5개의 숫자
     const uniqueNumbers = getRandomUniqueNumbers(0, 30, BORAD_SIZE / 2);
 
     setCard(uniqueNumbers);
+    setInit(true);
+    // setReady(true);
   };
 
   function getRandomUniqueNumbers(min, max, count) {
@@ -58,7 +63,7 @@ function CardGame() {
     const cardBack = document.querySelector('.card_wrap .inner');
     const cardFront = document.querySelector('.card_wrap .inner');
 
-    if (isCheck || item.complete) {
+    if (isCheck || item.complete || !ready) {
       return;
     }
 
@@ -147,6 +152,35 @@ function CardGame() {
     }
 
     totalCardRef.current = BORAD_SIZE;
+  }
+
+  function initCard() {
+    if (card.length === 0) {
+      return;
+    }
+
+    const cardBack = document.querySelector('.card_wrap .inner');
+    const cardFront = document.querySelector('.card_wrap .inner');
+
+    setTimeout(() => {
+      card.forEach((item, idx) => {
+        cardBack.childNodes[idx].querySelector('.card__back').style.transform =
+          'rotateY(180deg)';
+        cardFront.childNodes[idx].querySelector(
+          '.card__front'
+        ).style.transform = 'rotateY(0deg)';
+      });
+    }, 500);
+
+    setTimeout(() => {
+      card.forEach((item, idx) => {
+        closeCard(idx);
+      });
+    }, 2000);
+
+    setTimeout(() => {
+      setReady(true);
+    }, 2800);
   }
 
   return (
