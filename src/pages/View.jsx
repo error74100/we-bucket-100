@@ -105,8 +105,56 @@ function View({ user }) {
         <html>
           <head>
             <title>원본 이미지</title>
+
+            <style>
+            /* ico */
+            .ico_com {
+              font-size: 0;
+              line-height: 0;
+            }
+            .ico_com,
+            .ico_coma:after,
+            .ico_comb:before {
+              content: '';
+              display: inline-block;
+              overflow: hidden;
+              vertical-align: middle;
+              background-size: 100% auto;
+              background-repeat: no-repeat;
+            }
+              
+            .i_cancle {
+              width: 26px;
+              height: 26px;
+              margin: 0;
+              background-image: url('../src/assets/img/icon_cancle.png');
+            }
+
+            .close_popup_btn {
+              position:absolute;
+              top:0;
+              right:0;
+              font-size:0;
+              width:40px;
+              height:40px;
+              border: none;
+              background-color: rgba(255, 255, 255, 0.5);
+            }
+            </style>
+
+            <script>
+            window.onload = function(){
+              const closeBtn = document.querySelector(".close_popup_btn");
+              
+              closeBtn.addEventListener('click', function() {
+                window.open('','_self','');
+                window.close();
+              });
+            }
+            </script>
           </head>
           <body style="margin:0; display:flex; justify-content:center; align-items:center;background-color:#000;">
+            <button class="close_popup_btn" style="cursor:pointer;"><i class="ico_com i_cancle"></i>닫기</button>
             <img src="${imageUrl}" alt="Original Image" style="max-width:100%; max-height:100%;" />
           </body>
         </html>
