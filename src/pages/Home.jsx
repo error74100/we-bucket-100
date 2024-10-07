@@ -67,7 +67,9 @@ function Home() {
 
       // 비율 계산 (퍼센트)
       const rate = totalDocs > 0 ? (completedTaskCount / totalDocs) * 100 : 0;
-      setCompleteRate(rate);
+      const CountedPercentage = Math.floor(rate);
+
+      setCompleteRate(CountedPercentage);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
