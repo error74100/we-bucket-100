@@ -95,6 +95,28 @@ function View({ user }) {
     }
   };
 
+  const handleImageClick = (url) => {
+    const imageUrl = url;
+    const newWindow = window.open(imageUrl, '_blank', 'width=800,height=600');
+
+    if (newWindow) {
+      // 새 창에 HTML 작성
+      newWindow.document.write(`
+        <html>
+          <head>
+            <title>원본 이미지</title>
+          </head>
+          <body style="margin:0; display:flex; justify-content:center; align-items:center;background-color:#000;">
+            <img src="${imageUrl}" alt="Original Image" style="max-width:100%; max-height:100%;" />
+          </body>
+        </html>
+      `);
+
+      // 새 창에 있는 내용을 실제로 로드함
+      newWindow.document.close();
+    }
+  };
+
   return (
     <>
       {data && (
@@ -115,7 +137,13 @@ function View({ user }) {
                 {isImg === true ? (
                   <div
                     className="l_inner"
-                    style={{ backgroundImage: `url(${data.attachment})` }}
+                    style={{
+                      backgroundImage: `url(${data.attachment})`,
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {
+                      handleImageClick(`${data.attachment}`);
+                    }}
                   >
                     <span className="number">{data.seq}</span>
                   </div>
