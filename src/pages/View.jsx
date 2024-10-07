@@ -104,51 +104,13 @@ function View({ user }) {
       newWindow.document.write(`
         <html>
           <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>원본 이미지</title>
-
-            <style>
-            .bar {
-              display: inline-block;
-              width: 24px;
-              height: 2px;
-              position: absolute;
-              left: 50%;
-              top: 50%;
-              background-color: #fff;
-              transform: rotate(45deg);
-              margin: -1px 0 0 -12px;
-            }
-
-            .bar.type2 {
-              transform: rotate(-45deg);
-            }
-
-            .close_popup_btn {
-              position:absolute;
-              top:0;
-              right:0;
-              font-size:0;
-              width:40px;
-              height:40px;
-              border: none;
-              background-color: rgba(255, 255, 255, 0.5);
-            }
-            </style>
-
-            <script>
-            window.onload = function(){
-              const closeBtn = document.querySelector(".close_popup_btn");
-              
-              closeBtn.addEventListener('click', function() {
-                window.open('','_self','');
-                window.close();
-              });
-            }
-            </script>
           </head>
+
           <body style="margin:0; display:flex; justify-content:center; align-items:center;background-color:#000;">
-            <button class="close_popup_btn" style="cursor:pointer;"><span class="bar"></span><span class="bar type2"></span>닫기</button>
-            <img src="${imageUrl}" alt="Original Image" style="max-width:100%; max-height:100%;" />
+            <img src="${imageUrl}" alt="Original Image" style="max-width:100%;max-height:100%;" />
           </body>
         </html>
       `);
