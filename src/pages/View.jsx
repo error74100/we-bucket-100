@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import Emotion from '../components/Emotion';
 import Comment from '../components/Comment';
+import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
 
 function View({ user }) {
   const param = useParams();
@@ -14,6 +15,23 @@ function View({ user }) {
   const commentRef = useRef();
   const [isChange, setIsChange] = useState(false);
   const nav = useNavigate();
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const imgRef = useRef();
+  const openPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
+
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+
+  const onUpdate = useCallback(({ x, y, scale }) => {
+    const { current: img } = imgRef;
+
+    if (img) {
+      const value = make3dTransformValue({ x, y, scale });
+
+      img.style.setProperty('transform', value);
+    }
+  }, []);
 
   const getDocument = async () => {
     const docRef = doc(db, 'posts', param.docId);
@@ -53,6 +71,21 @@ function View({ user }) {
 
   useEffect(() => {
     getDocument();
+
+    const handleResize = () => {
+      setViewportHeight(window.innerHeight); // 현재 뷰포트 높이 업데이트
+    };
+
+    // 초기 높이 설정
+    setViewportHeight(window.innerHeight);
+
+    // 창 크기 변경 시 높이 다시 설정
+    window.addEventListener('resize', handleResize);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const onEdit = () => {
@@ -95,31 +128,6 @@ function View({ user }) {
     }
   };
 
-  const handleImageClick = (url) => {
-    const imageUrl = url;
-    const newWindow = window.open(imageUrl, '_blank', 'width=800,height=600');
-
-    if (newWindow) {
-      // 새 창에 HTML 작성
-      newWindow.document.write(`
-        <html>
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>원본 이미지</title>
-          </head>
-
-          <body style="margin:0; display:flex; justify-content:center; align-items:center;background-color:#000;">
-            <img src="${imageUrl}" alt="Original Image" style="max-width:100%;max-height:100%;" />
-          </body>
-        </html>
-      `);
-
-      // 새 창에 있는 내용을 실제로 로드함
-      newWindow.document.close();
-    }
-  };
-
   return (
     <>
       {data && (
@@ -144,9 +152,7 @@ function View({ user }) {
                       backgroundImage: `url(${data.attachment})`,
                       cursor: 'pointer',
                     }}
-                    onClick={() => {
-                      handleImageClick(`${data.attachment}`);
-                    }}
+                    onClick={openPopup}
                   >
                     <span className="number">{data.seq}</span>
                   </div>
@@ -195,6 +201,23 @@ function View({ user }) {
                 등록
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {isPopupOpen && (
+        <div
+          className="popup-container"
+          style={{ height: `${viewportHeight}px` }}
+        >
+          <div className="popup-content">
+            <button className="close-button" onClick={closePopup}>
+              X
+            </button>
+
+            <QuickPinchZoom onUpdate={onUpdate}>
+              <img ref={imgRef} src={data.attachment} />
+            </QuickPinchZoom>
           </div>
         </div>
       )}
