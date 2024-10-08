@@ -5,6 +5,7 @@ import { db } from '../firebase';
 import Emotion from '../components/Emotion';
 import Comment from '../components/Comment';
 import QuickPinchZoom, { make3dTransformValue } from 'react-quick-pinch-zoom';
+import { createBrowserHistory } from 'history';
 
 function View({ user }) {
   const param = useParams();
@@ -18,10 +19,14 @@ function View({ user }) {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const imgRef = useRef();
-  const openPopup = () => setIsPopupOpen(true);
+  const openPopup = () => {
+    window.history.pushState(null, '', window.location.href);
+    setIsPopupOpen(true);
+  };
   const closePopup = () => setIsPopupOpen(false);
 
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  const history = createBrowserHistory();
 
   const onUpdate = useCallback(({ x, y, scale }) => {
     const { current: img } = imgRef;
@@ -82,11 +87,17 @@ function View({ user }) {
     // 창 크기 변경 시 높이 다시 설정
     window.addEventListener('resize', handleResize);
 
+    const event = history.listen((listener) => {
+      if (listener.action === 'POP' && isPopupOpen) {
+        closePopup();
+      }
+    });
+
     // 컴포넌트 언마운트 시 이벤트 리스너 제거
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [isPopupOpen]);
 
   const onEdit = () => {
     nav(`/edit/${param.docId}`);
@@ -141,7 +152,6 @@ function View({ user }) {
               <i className="ico_com i_modify"></i>수정
             </button>
           </div>
-
           <div className="img_view_wrap">
             <ul>
               <li>
@@ -167,19 +177,16 @@ function View({ user }) {
               </li>
             </ul>
           </div>
-
           <div className="view_group">
             <div className="flex_wrap">
               <h2 className="h3_type">함께한 날짜</h2>
               <div>{withDate}</div>
             </div>
           </div>
-
           <div className="view_group">
             <h2 className="h3_type">감정 상태</h2>
             <Emotion emotionId={data.emotionId} onEmotion={'none'} />
           </div>
-
           <div className="view_group">
             <h2 className="h3_type">기록</h2>
 
@@ -215,7 +222,7 @@ function View({ user }) {
               X
             </button>
 
-            <QuickPinchZoom onUpdate={onUpdate}>
+            <QuickPinchZoom onUpdate={onUpdate} doubleTapToggleZoom={true}>
               <img ref={imgRef} src={data.attachment} />
             </QuickPinchZoom>
           </div>
